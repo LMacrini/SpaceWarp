@@ -102,7 +102,7 @@ class App:
                 i.draw_button(self.current_screen)
             # for i, v in enumerate(self.doors):
             #     pyxel.text(64, i*8, str(v.opening), 7)
-            print(''.join(map(str, self.rooms[0].objects)))
+            # print(''.join(map(str, self.rooms[0].objects)))
             self.player.draw_player()
 
 App()
