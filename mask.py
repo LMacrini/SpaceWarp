@@ -10,16 +10,13 @@ class App:
         pyxel.run(self.update, self.draw)
 
     def update(self):
-
         if 0 < pyxel.frame_count <= self.room_nb:
             room = [[pyxel.pget(x * 8, y * 8) for y in range(16)] for x in range(16)]
             self.rooms.append(room)
 
         if pyxel.frame_count == self.room_nb:
             with open('mask.json', 'w') as file:
-                self.rooms_json = json.dumps(self.rooms)
-                file.write(self.rooms_json)
-
+                json.dump(self.rooms, file)
 
         elif pyxel.frame_count == self.room_nb + 1:
             pyxel.quit()
@@ -28,4 +25,5 @@ class App:
         pyxel.cls(0)
         pyxel.bltm(0, 0, 2, 128 * (pyxel.frame_count), 128, 128, 128)
 
-App(int(input("Number of rooms?")))
+room_nb = int(input("Number of rooms?"))
+App(room_nb)

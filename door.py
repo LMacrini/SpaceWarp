@@ -9,8 +9,7 @@ class Door:
         self.active = 8
         self.opening = 0
 
-
-    def draw_door(self, screen):
-        if screen == self.screen:
-            pyxel.blt(self.x, self.y, 0, 32 + 8*self.col, 40 - self.active, 8, self.active, 0)
-            pyxel.blt(self.x, self.y + 16 - self.active, 0, 32 + 8*self.col, 40, 8, self.active, 0)
+    def draw_door(self, current_screen):
+        if self.screen == current_screen:
+            pyxel.blt(self.x, self.y, 0, 32 + 8 * self.col, 40 - self.active, 8, self.active, 0)
+            pyxel.blt(self.x, self.y + 16 - self.active, 0, 32 + 8 * self.col, 40, 8, self.active, 0)

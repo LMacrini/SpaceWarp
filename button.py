@@ -11,6 +11,6 @@ class Button:
         if self.active_time > 0:
             self.active_time -= 1
 
-    def draw_button(self, screen):
-        if screen == self.screen:
+    def draw_button(self, current_screen):
+        if self.screen == current_screen:
             pyxel.blt(self.x, self.y, 0, 16, 32, 8, 8, 0)
