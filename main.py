@@ -30,7 +30,6 @@ class App:
         mask = json.loads(file.read())
         self.mask = []
         for i in mask:
-            # print(i)
             self.mask.append(Room(i))
         file.close()
 
@@ -108,9 +107,6 @@ class App:
                 i.draw_key(self.current_screen)
             for i in self.buttons:
                 i.draw_button(self.current_screen)
-            # for i, v in enumerate(self.doors):
-            #     pyxel.text(64, i*8, str(v.opening), 7)
-            # print(''.join(map(str, self.rooms[0].objects)))
             self.player.draw_player()
 
 App()
