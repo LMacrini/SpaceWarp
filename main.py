@@ -3,7 +3,7 @@ from door import Door
 from key import Key
 from button import Button
 from rooms import Room
-import pyxel
+import pyxel, json
 
 
 class App:
@@ -13,9 +13,9 @@ class App:
         self.current_screen = 0
         self.max_screen = -1
         self.u = 0
-        # self.doors = [Door(104, 40, 0, 0), Door(80, 80, 0, 1), Door(72, 80, 1, 0), Door(112, 40, 1, 0),
-        #               Door(48, 80, 1, 1), Door(48, 104, 1, 2), Door(72, 104, 1, 2), Door(104, 48, 2, 0),
-        #               Door(56, 40, 2, 1), Door(112, 104, 2, 1)]
+
+        self.load_mask('mask.json')
+        print(self.mask[0].objects)
         self.doors = []
         self.rooms = []
         
@@ -25,6 +25,14 @@ class App:
         pyxel.load("assets/1.pyxres")
         pyxel.run(self.update, self.draw)
         
+    def load_mask(self, file_name):
+        file = open(file_name, 'r')
+        mask = json.loads(file.read())
+        self.mask = []
+        for i in mask:
+            # print(i)
+            self.mask.append(Room(i))
+        file.close()
 
     def update(self):
         
