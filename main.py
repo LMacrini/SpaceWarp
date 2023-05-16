@@ -98,8 +98,6 @@ class App:
         else:
             
             pyxel.cls(0)
-            
-
             pyxel.bltm(0, 0, 2, self.u, 0, 128, 128)
             for i in self.doors:
                 i.draw_door(self.current_screen)
