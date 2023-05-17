@@ -37,17 +37,11 @@ jobs:
 
       - name: Build EXE
         run: pyxel app2exe ./SpaceWarp.pyxapp
-        
-      - name: DIR
-        run: dir
-        
-      - name: DIR
-        run: dir ./SpaceWarp
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "SpaceWarp.exe"
+          artifacts: "SpaceWarp.pyxapp"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: spacewarp
           name: Automated Release
