@@ -30,6 +30,9 @@ jobs:
       - name: Build and Package
         run: pyxel package ./ main.py
 
+      - name: Install Pyinstaller
+        run: pip install pyinstaller 
+
       - name: Build EXE
         run: pyxel app2exe ./SpaceWarp.pyxapp
 
