@@ -31,7 +31,7 @@ jobs:
         run: pyxel package ./ main.py
 
       - name: Build EXE
-        run: pyxel app2exe ./main.pyxapp
+        run: pyxel app2exe ./SpaceWarp.pyxapp
 
       - name: Create Release
         id: create_release
