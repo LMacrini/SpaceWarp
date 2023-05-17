@@ -30,11 +30,8 @@ jobs:
       - name: Build and Package
         run: pyxel package ./ main.py
 
-      - name: Install PyInstaller
-        run: pip install pyinstaller
-
       - name: Build EXE
-        run: pyinstaller --onefile ./SpaceWarp/main.pyxapp
+        run: pyxel app2exe
 
       - name: Create Release
         id: create_release
@@ -47,4 +44,4 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./SpaceWarp/dist/main.exe
+            ./SpaceWarp.exe
