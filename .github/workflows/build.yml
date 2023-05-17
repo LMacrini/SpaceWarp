@@ -37,14 +37,11 @@ jobs:
         run: pyxel app2exe ./SpaceWarp.pyxapp
 
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release v${{ github.run_number }}
-          draft: false
-          prerelease: false
-          files: |
-            ./SpaceWarp.exe
+          artifacts: "SpaceWarp.exe"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: spacewarp
+          name: Automated Release
+          replacesArtifacts: true
+          allowUpdates: true
