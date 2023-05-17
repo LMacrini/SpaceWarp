@@ -17,8 +17,7 @@ class App:
 
         if pyxel.frame_count == self.room_nb:
             with open('mask.json', 'w') as file:
-                self.rooms_json = json.dumps(self.rooms)
-                file.write(self.rooms_json)
+                    json.dump(self.rooms, file)
 
 
         elif pyxel.frame_count == self.room_nb + 1:

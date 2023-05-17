@@ -1,4 +1,5 @@
 import pyxel
+import rooms
 
 class Player:
     #setting up player pos, direction and jump=false
@@ -15,8 +16,15 @@ class Player:
         self.on_key = -1
 
     #movement    
-    def move(self):
-        if pyxel.btn(pyxel.KEY_RIGHT) and all(pyxel.pget(self.x + 8, self.y + i) != 1 for i in range(8)):
+    def move(self, room):
+
+        
+        if (
+            pyxel.btn(pyxel.KEY_RIGHT)
+            and (
+            all(room.objects[pyxel.floor(self.x / 8)][pyxel.floor(self.y / 8)] != ())
+            )
+            ):
             self.x += 1
             self.dir = 0
             self.moving = 1
@@ -43,6 +51,7 @@ class Player:
         if self.jumping > 0:
             self.y -= 2
             self.jumping -= 1
+        
 
     def OnKey(self, keys, screen):
         for i in keys:
