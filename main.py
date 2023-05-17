@@ -9,7 +9,7 @@ from rooms import Room
 class App:
     def __init__(self):
         self.gamestate = 0
-        self.player = Player(0, 0, 0)
+        self.player = Player(0, 48, 0)
         self.current_screen = 0
         self.offset_x = 0
         self.load_mask('mask.json')
@@ -32,10 +32,6 @@ class App:
             self.gamestate = 1
 
         if self.gamestate == 0:
-            return
-
-        if self.player.deaded == 1:
-            self.gamestate = 0
             return
 
         self.player.move(self.mask[self.current_screen])

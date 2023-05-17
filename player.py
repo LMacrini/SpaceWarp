@@ -10,9 +10,7 @@ class Player:
         self.dir = d
         self.moving = 0
         self.jumping = 0
-        self.int = 0
         self.grav = 2
-        self.deaded = 0
         self.on_key = -1
 
     #movement    
@@ -63,6 +61,20 @@ class Player:
         if self.jumping > 0:
             self.y -= 2
             self.jumping -= 1
+
+        if (room.collision(self.x, self.y) == 5
+            or room.collision(self.x + 7, self.y) == 5
+            or room.collision(self.x, self.y + 7) == 5
+            or room.collision(self.x + 7, self.y + 7) == 5
+        ):
+            self.reset()
+
+    def reset(self):
+        self.x = 0
+        self.y = 48
+        self.dir = 0
+        self.moving = 0
+        self.jumping = 0
     
 
     def OnKey(self, keys, screen):
