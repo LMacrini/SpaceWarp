@@ -25,6 +25,9 @@ jobs:
         run: pip install pyxel
 
       - name: Build and Package
+        run: dir
+
+      - name: Build and Package
         run: pyxel package ./ main.py
 
       - name: Install PyInstaller
