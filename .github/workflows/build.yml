@@ -22,7 +22,7 @@ jobs:
           python-version: 3.x
 
       - name: Install Packages
-        run: apt-get install git curl libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
+        run: sudo apt-get install git curl libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
 
       - name: Install Pyxel
         run: pip install pyxel
