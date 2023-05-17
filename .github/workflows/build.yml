@@ -40,6 +40,12 @@ jobs:
         
       - name: DIR
         run: dir
+        
+      - name: DIR
+        run: cd build
+
+      - name: DIR
+        run: dir
 
       - name: Create Release
         uses: ncipollo/release-action@v1
