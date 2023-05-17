@@ -21,14 +21,17 @@ class Player:
         
         if (
             pyxel.btn(pyxel.KEY_RIGHT)
-            and (
-            all(room.objects[pyxel.floor(self.x / 8)][pyxel.floor(self.y / 8)] != ())
-            )
-            ):
+            and room.collision(self.x + 8, self.y) != 1
+            and room.collision(self.x + 8, self.y + 7) != 1
+        ):
             self.x += 1
             self.dir = 0
             self.moving = 1
-        elif pyxel.btn(pyxel.KEY_LEFT) and all(pyxel.pget(self.x - 1, self.y + i) != 1 for i in range(8)):
+        elif (
+            pyxel.btn(pyxel.KEY_LEFT)
+            and room.collision(self.x - 1, self.y) != 1
+            and room.collision(self.x - 1, self.y + 7) != 1
+        ):
             self.x -= 1
             self.dir = 1
             self.moving = 1
@@ -36,22 +39,31 @@ class Player:
         else:
             self.moving = 0
 
-        if pyxel.btn(pyxel.KEY_SPACE) and any(pyxel.pget(self.x + i, self.y + 8) == 1 for i in range(8)):
+        if (
+            pyxel.btn(pyxel.KEY_SPACE) 
+            and (room.collision(self.x, self.y + 8) == 1
+                 or room.collision(self.x + 7, self.y + 8) == 1)
+        ):
             self.jumping = 12
         
-        elif all(pyxel.pget(self.x + i, self.y + 8) != 1 for i in range(8)) and self.jumping == 0: #not intersecting anything:
-            if all(pyxel.pget(self.x + i, self.y + 9) != 1 for i in range(8)):
-                self.y += self.grav
-            else:
+        for i in range(self.grav):
+            if (
+                self.jumping == 0
+                and room.collision(self.x, self.y + 8) != 1
+                and room.collision(self.x + 7, self.y + 8) != 1
+            ):
                 self.y += 1
     
-        if any(pyxel.pget(self.x + i, self.y - 1) == 1 for i in range(8)):
+        if (
+            room.collision(self.x, self.y - 2) == 1
+            or room.collision(self.x + 7, self.y - 2) == 1
+        ):
             self.jumping = 0
         
         if self.jumping > 0:
             self.y -= 2
             self.jumping -= 1
-        
+    
 
     def OnKey(self, keys, screen):
         for i in keys:

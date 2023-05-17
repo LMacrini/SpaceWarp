@@ -38,7 +38,7 @@ class App:
             self.gamestate = 0
             return
 
-        self.player.move()
+        self.player.move(self.mask[self.current_screen])
         self.process_key_interaction()
         self.process_button_interaction()
         self.update_door_status()
