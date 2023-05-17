@@ -42,7 +42,7 @@ jobs:
         run: dir
         
       - name: DIR
-        run: cd build & dir
+        run: dir ./SpaceWarp
 
       - name: Create Release
         uses: ncipollo/release-action@v1
