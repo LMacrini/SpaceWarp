@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: Wam25/SpaceWarp
 
@@ -25,7 +25,7 @@ jobs:
         run: pip install pyxel
 
       - name: Build and Package
-        run: pyxel package /SpaceWarp main.py
+        run: pyxel package ./ main.py
 
       - name: Install PyInstaller
         run: pip install pyinstaller
