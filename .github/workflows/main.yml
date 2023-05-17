@@ -3,8 +3,8 @@ name: Build and Release Pyxel Game
 on:
   push:
     branches:
-      - main
-    workflow_dispatch:
+      - build
+  workflow_dispatch:
 
 jobs:
   build:
