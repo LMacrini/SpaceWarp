@@ -14,7 +14,7 @@ class Player:
         self.on_key = -1
 
     #movement    
-    def move(self, room):
+    def move(self, room, current_screen):
 
         
         if (
@@ -27,8 +27,10 @@ class Player:
             self.moving = 1
         elif (
             pyxel.btn(pyxel.KEY_LEFT)
-            and room.collision(self.x - 1, self.y) != 1
-            and room.collision(self.x - 1, self.y + 7) != 1
+            and ( (room.collision(self.x - 1, self.y) != 1
+            and room.collision(self.x - 1, self.y + 7) != 1 
+            and self.x > 0)
+            or (self.x == 0 and current_screen > 0) )
         ):
             self.x -= 1
             self.dir = 1
@@ -76,19 +78,6 @@ class Player:
         self.moving = 0
         self.jumping = 0
     
-
-    def OnKey(self, keys, screen):
-        for i in keys:
-            if (not ( ( (self.x + 8 < i.x) or (self.x > i.x + 8) ) or ( ( self.y + 8 < i.y) or (self.y > i.y + 8) ) )) and i.screen == screen:
-                return i.col
-            else:
-                return -1
-        
-    def OnButton(self, buttons, screen):
-        for i in buttons:
-            if self.y == i.y - 3 and any( ((self.x + j == i.x) or (self.x == i.x + j)) for j in range(8) ) and i.screen == screen:
-                i.active_time = 300
-
     
     def draw_player(self):
         if self.jumping > 0:
