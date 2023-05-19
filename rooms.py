@@ -1,8 +1,10 @@
+import pyxel
+
 class Room:
     def __init__(self, objects):
         self.objects = objects
         self.keys = [1] * 3
-        self.doors = [0] * 3
+        self.doors = [1] * 3
         self.doors_state = [8] * 3
 
     def collision(self, x, y):
@@ -21,3 +23,14 @@ class Room:
             return object_on
         else:
             return 0
+    
+    def draw_room(self):
+        for x, a1 in enumerate(self.objects):
+            for y, a2 in enumerate(a1):
+                if 1 < a2 < 5 and self.keys[a2 - 2] == 1:
+                    pyxel.blt(x * 8, y * 8, 0, 56, 32 + 8 * (a2 - 2), 8, 8, 0)
+                elif 8 < a2 < 12:
+                    pyxel.blt(x * 8, y * 8, 0, 32 + 8 * (a2 - 9), 40 - self.doors_state[a2 - 9], 8, self.doors_state[a2 - 9], 0)
+                    pyxel.blt(x * 8, y * 8 + 16 - self.doors_state[a2 - 9], 0, 32 + 8 * (a2 - 9), 40, 8, self.doors_state[a2 - 9], 0)
+                elif a2 == 12:
+                    pyxel.blt(x * 8, y * 8, 0, 16, 32, 8, 8, 0)
