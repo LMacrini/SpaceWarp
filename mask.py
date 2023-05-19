@@ -6,7 +6,7 @@ class App:
         self.room_nb = room_nb
         self.rooms = []
         pyxel.init(128, 128, title='SpaceWarp')
-        pyxel.load("assets/1.pyxres")
+        pyxel.load("ressources/assets.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):
@@ -16,7 +16,7 @@ class App:
             self.rooms.append(room)
 
         if pyxel.frame_count == self.room_nb:
-            with open('mask.json', 'w') as file:
+            with open('ressources/mask.json', 'w') as file:
                     json.dump(self.rooms, file)
 
 

@@ -9,11 +9,11 @@ class App:
         self.player = Player(0, 48, 0)
         self.current_screen = 0
         self.offset_x = 0
-        self.load_mask('mask.json')
+        self.load_mask('ressources/mask.json')
         self.rooms = []
         
         pyxel.init(128, 128, title='SpaceWarp')
-        pyxel.load("assets/1.pyxres")
+        pyxel.load("ressources/assets.pyxres")
         pyxel.run(self.update, self.draw)
         
     def load_mask(self, file_name):
