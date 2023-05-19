@@ -19,7 +19,7 @@ DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 OutputBaseFilename=SpaceWarpSetup
-SetupIconFile=..\icon\SpaceWarp.ico
+SetupIconFile=..\ressources\SpaceWarp.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
