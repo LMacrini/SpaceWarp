@@ -9,7 +9,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{47C04CC5-94D6-49DA-BA4E-E8CCA7FF7895}
+AppId={{F6BA98A5-91EE-4458-B6C7-EFF8DD7F4A29}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -19,6 +19,7 @@ DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 OutputBaseFilename=SpaceWarp
+SetupIconFile=D:\stuff i might need\Projects\SpaceWarp\icon\SpaceWarp.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
