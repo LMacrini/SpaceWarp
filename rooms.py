@@ -24,7 +24,7 @@ class Room:
         else:
             return 0
     
-    def draw_room(self):
+    def draw_room(self, player_x, player_y):
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
                 if 1 < a2 < 5 and self.keys[a2 - 2] == 1:
@@ -33,4 +33,11 @@ class Room:
                     pyxel.blt(x * 8, y * 8, 0, 32 + 8 * (a2 - 9), 40 - self.doors_state[a2 - 9], 8, self.doors_state[a2 - 9], 0)
                     pyxel.blt(x * 8, y * 8 + 16 - self.doors_state[a2 - 9], 0, 32 + 8 * (a2 - 9), 40, 8, self.doors_state[a2 - 9], 0)
                 elif a2 == 12:
-                    pyxel.blt(x * 8, y * 8, 0, 16, 32, 8, 8, 0)
+                    if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
+                        pass
+                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8:
+                        pyxel.blt(x * 8, y * 8 + 2, 0, 16, 32, 8, 6, 0)
+                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8:
+                        pyxel.blt(x * 8, y * 8 + 1, 0, 16, 32, 8, 7, 0)
+                    else:
+                        pyxel.blt(x * 8, y * 8, 0, 16, 32, 8, 8, 0)

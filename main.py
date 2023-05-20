@@ -52,7 +52,7 @@ class App:
         else:
             pyxel.cls(0)
             pyxel.bltm(0, 0, 2, self.offset_x, 0, 128, 128)
-            self.mask[self.current_screen].draw_room()
+            self.mask[self.current_screen].draw_room(self.player.x, self.player.y)
             self.player.draw_player()
 
 App()
