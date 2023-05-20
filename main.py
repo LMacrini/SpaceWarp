@@ -10,7 +10,6 @@ class App:
         self.current_screen = 0
         self.offset_x = 0
         self.load_mask('ressources/mask.json')
-        self.rooms = []
         
         pyxel.init(128, 128, title='SpaceWarp')
         pyxel.load("ressources/assets.pyxres")
@@ -19,7 +18,7 @@ class App:
     def load_mask(self, file_name):
         with open(file_name, 'r') as file:
             mask = json.load(file)
-            self.mask = [Room(i) for i in mask]
+            self.rooms = [Room(i) for i in mask]
 
     def update(self):
         if pyxel.btn(pyxel.KEY_S):
@@ -28,9 +27,9 @@ class App:
         if self.gamestate == 0:
             return
 
-        self.player.move(self.mask[self.current_screen], self.current_screen)
+        self.player.move(self.rooms[self.current_screen], self.current_screen)
         self.update_screen_position()
-        self.mask[self.current_screen].update_room(self.player.x, self.player.y)
+        self.rooms[self.current_screen].update_room(self.player.x, self.player.y)
 
     def update_screen_position(self):
         if self.player.x == 128:
@@ -53,7 +52,7 @@ class App:
         else:
             pyxel.cls(0)
             pyxel.bltm(0, 0, 2, self.offset_x, 0, 128, 128)
-            self.mask[self.current_screen].draw_room()
+            self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
 
 App()

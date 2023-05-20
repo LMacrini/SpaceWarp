@@ -28,15 +28,31 @@ class Room:
     def update_room(self, player_x, player_y):
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
-                if a2 == 12:
+                if 1 < a2 < 5:
+                    if ( not (player_x + 7 < x * 8 or x * 8 + 7 < player_x
+                        or player_y + 7 < y * 8 or y * 8 + 7 < player_y) ):
+                        self.keys[a2 - 2] = 0
+                elif 8 < a2 < 12:
+                    if self.keys[a2 - 9] == 0 or (a2 == 10 and self.button_state != 0):
+                        self.doors[a2 - 9] = 0
+                        
+                    else:
+                        self.doors[a2 - 9] = 1
+                        
+                elif a2 == 12:
                     if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
                         self.button_state = 300
-                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state < 2:
+                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state <= 2:
                         self.button_state = 2
-                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state < 1:
+                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state <= 1:
                         self.button_state = 1
                     elif self.button_state != 0:
-                        self.button_state -= 1             
+                        self.button_state -= 1
+        for i in range(3):
+            if self.doors[i] == 0 and self.doors_state[i] > 0:
+                self.doors_state[i] -= 1
+            elif self.doors[i] == 1 and self.doors_state[i] < 8:
+                    self.doors_state[i] += 1
 
     def draw_room(self):
         for x, a1 in enumerate(self.objects):
