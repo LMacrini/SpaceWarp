@@ -30,6 +30,7 @@ class App:
 
         self.player.move(self.mask[self.current_screen], self.current_screen)
         self.update_screen_position()
+        self.mask[self.current_screen].update_room(self.player.x, self.player.y)
 
     def update_screen_position(self):
         if self.player.x == 128:
@@ -52,7 +53,7 @@ class App:
         else:
             pyxel.cls(0)
             pyxel.bltm(0, 0, 2, self.offset_x, 0, 128, 128)
-            self.mask[self.current_screen].draw_room(self.player.x, self.player.y)
+            self.mask[self.current_screen].draw_room()
             self.player.draw_player()
 
 App()

@@ -6,6 +6,7 @@ class Room:
         self.keys = [1] * 3
         self.doors = [1] * 3
         self.doors_state = [8] * 3
+        self.button_state = 0
 
     def collision(self, x, y):
         if x // 8 > 15 or y // 8 > 15:
@@ -24,7 +25,20 @@ class Room:
         else:
             return 0
     
-    def draw_room(self, player_x, player_y):
+    def update_room(self, player_x, player_y):
+        for x, a1 in enumerate(self.objects):
+            for y, a2 in enumerate(a1):
+                if a2 == 12:
+                    if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
+                        self.button_state = 300
+                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state < 2:
+                        self.button_state = 2
+                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state < 1:
+                        self.button_state = 1
+                    elif self.button_state != 0:
+                        self.button_state -= 1             
+
+    def draw_room(self):
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
                 if 1 < a2 < 5 and self.keys[a2 - 2] == 1:
@@ -33,11 +47,9 @@ class Room:
                     pyxel.blt(x * 8, y * 8, 0, 32 + 8 * (a2 - 9), 40 - self.doors_state[a2 - 9], 8, self.doors_state[a2 - 9], 0)
                     pyxel.blt(x * 8, y * 8 + 16 - self.doors_state[a2 - 9], 0, 32 + 8 * (a2 - 9), 40, 8, self.doors_state[a2 - 9], 0)
                 elif a2 == 12:
-                    if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
-                        pass
-                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8:
-                        pyxel.blt(x * 8, y * 8 + 2, 0, 16, 32, 8, 6, 0)
-                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8:
-                        pyxel.blt(x * 8, y * 8 + 1, 0, 16, 32, 8, 7, 0)
-                    else:
+                    if self.button_state == 0:
                         pyxel.blt(x * 8, y * 8, 0, 16, 32, 8, 8, 0)
+                    elif self.button_state == 1:
+                        pyxel.blt(x * 8, y * 8 + 1, 0, 16, 32, 8, 7, 0)
+                    elif self.button_state == 2:
+                        pyxel.blt(x * 8, y * 8 + 2, 0, 16, 32, 8, 6, 0)
