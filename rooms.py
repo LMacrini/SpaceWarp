@@ -26,6 +26,9 @@ class Room:
             return 0
     
     def update_room(self, player_x, player_y):
+        if self.button_state != 0:
+            self.button_state -= 1
+        
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
                 if 1 < a2 < 5:
@@ -46,8 +49,7 @@ class Room:
                         self.button_state = 2
                     elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state <= 1:
                         self.button_state = 1
-                    elif self.button_state != 0:
-                        self.button_state -= 1
+
         for i in range(3):
             if self.doors[i] == 0 and self.doors_state[i] > 0:
                 self.doors_state[i] -= 1
