@@ -77,8 +77,8 @@ class Player:
         self.dir = 0
         self.moving = 0
         self.jumping = 0
-    
-    
+
+
     def draw_player(self):
         if self.jumping > 0:
             pyxel.blt(self.x, self.y, 0, 24, 8*self.dir, 8, 8, 0)
