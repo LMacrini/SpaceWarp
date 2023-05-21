@@ -44,7 +44,7 @@ class Room:
                         
                 elif a2 == 12:
                     if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
-                        self.button_state = 300
+                        self.button_state = 150
                     elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state <= 2:
                         self.button_state = 2
                     elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state <= 1:
