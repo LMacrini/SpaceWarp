@@ -25,6 +25,9 @@ jobs:
 
       - name: Install Python Packages
         run: pip install pyxel pyinstaller
+        
+      - name: Run mask.py
+        run: python mask.py
 
       - name: Build EXE
         run: pyinstaller SpaceWarp.spec
