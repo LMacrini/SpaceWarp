@@ -35,7 +35,7 @@ jobs:
           name: windows
           path: ./dist/
   mac:
-    runs-on: macos-11
+    runs-on: macos-latest
 
     steps:
       - name: Checkout code
