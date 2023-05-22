@@ -13,8 +13,6 @@ class Player:
         self.alive = 1
 
     def move(self, room, current_screen):
-
-        
         if (
             pyxel.btn(pyxel.KEY_RIGHT)
             and room.collision(self.x + 8, self.y) != 1
