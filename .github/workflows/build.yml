@@ -33,6 +33,35 @@ jobs:
         with:
           name: windows
           path: ./dist/
+  windows-installer:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: Wam25/SpaceWarp
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
+        
+      - name: Build App
+        run: pyinstaller SpaceWarp.spec
+
+      - uses: nadeemjazmawe/inno-setup-action-cli@v6.0.5
+        with: 
+          filepath: './ISS/script.iss'
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./ISS/Output/SpaceWarpSetup.exe
   mac:
     runs-on: macos-latest
 
