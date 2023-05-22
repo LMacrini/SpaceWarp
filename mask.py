@@ -18,7 +18,7 @@ class App:
             self.rooms.append(room)
 
         if pyxel.frame_count // self.frame_delay == self.room_nb and pyxel.frame_count % self.frame_delay == 0:
-            print(self.rooms)
+            # print(self.rooms)
             with open('ressources/mask.json', 'w') as file:
                     json.dump(self.rooms, file)
 
