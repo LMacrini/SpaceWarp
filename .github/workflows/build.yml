@@ -1,4 +1,4 @@
-name: Build and Release Pyxel Game
+name: Build SpaceWarp
 
 on:
   push:
@@ -18,6 +18,9 @@ jobs:
         with:
           repository: Wam25/SpaceWarp
 
+      - name: Setup 7zip
+        run: choco install 7zip
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -29,21 +32,17 @@ jobs:
       - name: Install Pyxel
         run: pip install pyxel
 
-      - name: Build and Package
-        run: pyxel package ./ main.py
-
       - name: Install Pyinstaller
         run: pip install pyinstaller 
 
       - name: Build EXE
-        run: pyxel app2exe ./SpaceWarp.pyxapp
+        run: pyinstaller main.py --add-data "mask.json;./" --add-data "assets;assets" -w --clean -n SpaceWarp -y
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1
+      - name: Package Compiled Files
+        run: 7z a -t7z -r SpaceWarp.7z D:/a/SpaceWarp/SpaceWarp/dist/main
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
         with:
-          artifacts: "SpaceWarp.pyxapp"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: spacewarp
-          name: Automated Release
-          replacesArtifacts: true
-          allowUpdates: true
+          name: Package
+          path: /SpaceWarp/dist/main/SpaceWarp.7z
