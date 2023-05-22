@@ -2,8 +2,6 @@
 
 This fork is specifically designed to streamline the build process for the game Spacewarp. This repository automates the generation of game builds, making it easier for developers and players alike to access the latest versions of the game.
 
-To access the builds, simply navigate to the "Actions" tab on GitHub while being signed in to your account. In the "Artifacts" section of the Actions page, you will find the generated builds available for download.
-
 ## How to Download
 
 Navigate to the "Actions" tab on GitHub
