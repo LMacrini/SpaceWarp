@@ -32,6 +32,9 @@ jobs:
       - name: Build EXE
         run: pyinstaller SpaceWarp.spec
 
+      - name: Build DIR
+        run: dir
+
       - name: Package Files
         run: 7z a -t7z -r SpaceWarp.7z /dist/main
 
