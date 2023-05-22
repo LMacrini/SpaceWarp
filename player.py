@@ -2,9 +2,7 @@ import pyxel
 import rooms
 
 class Player:
-    #setting up player pos, direction and jump=false
     def __init__(self, x, y, d):
-        # pyxel.load("assets/1.pyxres")
         self.x = x
         self.y = y
         self.dir = d
@@ -14,7 +12,6 @@ class Player:
         self.on_key = -1
         self.alive = 1
 
-    #movement    
     def move(self, room, current_screen):
 
         

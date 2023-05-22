@@ -14,11 +14,9 @@ class App:
 
         if 0 < pyxel.frame_count // self.frame_delay <= self.room_nb and pyxel.frame_count % self.frame_delay == 0:
             room = [[pyxel.pget(x * 8, y * 8) for y in range(16)] for x in range(16)]
-            # print(room)
             self.rooms.append(room)
 
         if pyxel.frame_count // self.frame_delay == self.room_nb and pyxel.frame_count % self.frame_delay == 0:
-            # print(self.rooms)
             with open('ressources/mask.json', 'w') as file:
                     json.dump(self.rooms, file)
 
