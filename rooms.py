@@ -1,8 +1,9 @@
 import pyxel
 
 class Room:
-    def __init__(self, objects):
+    def __init__(self, objects, types):
         self.objects = objects
+        self.types = types
         self.keys = [1] * 3
         self.doors = [1] * 3
         self.doors_state = [8] * 3
@@ -15,11 +16,18 @@ class Room:
             return 0
         
         object_on = self.objects[x // 8][y // 8]
+        type_on = self.types[x // 8][y // 8]
+        object_below = self.objects[x // 8][y // 8 - 1]
+        type_below = self.types[x // 8][y // 8 - 1]
         if (
           object_on  == 1
-          or (self.doors[0] == 1 and (object_on == 9 or self.objects[x // 8][y // 8 - 1] == 9))
-          or (self.doors[1] == 1 and (object_on == 10 or self.objects[x // 8][y // 8 - 1] == 10))
-          or (self.doors[2] == 1 and (object_on == 11 or self.objects[x // 8][y // 8 - 1] == 11))
+        or (object_on == 2 and (
+            self.doors[type_on - 1] == 1
+        ))
+        or (object_below == 2 and (
+            self.doors[type_below - 1] == 1
+        ))
+        
         ):
             return 1
         elif 1 < object_on < 7:
@@ -33,18 +41,18 @@ class Room:
         
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
-                if 1 < a2 < 5:
+                type = self.types[x][y]
+                if a2 == 2:
+                    if self.keys[type - 1] == 0 or (type == 2 and self.button_state != 0):
+                        self.doors[type - 1] = 0
+                elif a2 == 3:
                     if ( not (player_x + 7 < x * 8 or x * 8 + 7 < player_x
                         or player_y + 7 < y * 8 or y * 8 + 7 < player_y) ):
-                        self.keys[a2 - 2] = 0
-                elif 8 < a2 < 12:
-                    if self.keys[a2 - 9] == 0 or (a2 == 10 and self.button_state != 0):
-                        self.doors[a2 - 9] = 0
+                        self.keys[type - 1] = 0
                         
                     else:
-                        self.doors[a2 - 9] = 1
-                        
-                elif a2 == 12:
+                        self.doors[type - 1] = 1    
+                elif a2 == 4:
                     if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
                         self.button_state = 150
                     elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state <= 2:
@@ -61,12 +69,13 @@ class Room:
     def draw_room(self):
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
-                if 1 < a2 < 5 and self.keys[a2 - 2] == 1:
-                    pyxel.blt(x * 8, y * 8, 0, 56, 32 + 8 * (a2 - 2), 8, 8, 0)
-                elif 8 < a2 < 12:
-                    pyxel.blt(x * 8, y * 8, 0, 32 + 8 * (a2 - 9), 40 - self.doors_state[a2 - 9], 8, self.doors_state[a2 - 9], 0)
-                    pyxel.blt(x * 8, y * 8 + 16 - self.doors_state[a2 - 9], 0, 32 + 8 * (a2 - 9), 40, 8, self.doors_state[a2 - 9], 0)
-                elif a2 == 12:
+                type = self.types[x][y]
+                if a2 == 2:
+                    pyxel.blt(x * 8, y * 8, 0, 32 + 8 * (type - 1), 40 - self.doors_state[type - 1], 8, self.doors_state[type - 1], 0)
+                    pyxel.blt(x * 8, y * 8 + 16 - self.doors_state[type - 1], 0, 32 + 8 * (type - 1), 40, 8, self.doors_state[type - 1], 0)
+                elif a2 == 3 and self.keys[type - 1] == 1:
+                    pyxel.blt(x * 8, y * 8, 0, 56, 32 + 8 * (type - 1), 8, 8, 0)
+                elif a2 == 4:
                     if self.button_state == 0:
                         pyxel.blt(x * 8, y * 8, 0, 16, 32, 8, 8, 0)
                     elif self.button_state == 1:

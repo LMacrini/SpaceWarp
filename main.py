@@ -19,7 +19,9 @@ class App:
     def load_mask(self, file_name):
         with open(file_name, 'r') as file:
             mask = json.load(file)
-            self.rooms = [Room(i) for i in mask]
+            self.rooms = []
+            for i in range(mask[0]):
+                self.rooms.append(Room(mask[1][i], mask[2][i]))
 
     def update(self):
         if pyxel.btn(pyxel.KEY_S):
