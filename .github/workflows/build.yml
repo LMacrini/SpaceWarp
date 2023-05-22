@@ -33,7 +33,7 @@ jobs:
         run: pyinstaller SpaceWarp.spec
 
       - name: Package Files
-        run: 7z a -t7z -r SpaceWarp.7z D:/a/SpaceWarp/dist/main
+        run: 7z a -t7z -r SpaceWarp.7z /SpaceWarp/dist/main
 
       - name: Create Artifact
         uses: actions/upload-artifact@v3
