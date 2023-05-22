@@ -9,7 +9,7 @@ on:
 permissions: write-all
 
 jobs:
-  build:
+  windows:
     runs-on: windows-latest
 
     steps:
@@ -26,14 +26,36 @@ jobs:
       - name: Install Python Packages
         run: pip install pyxel pyinstaller
         
-      - name: Run mask.py
-        run: python mask.py
-
-      - name: Build EXE
+      - name: Build App
         run: pyinstaller SpaceWarp.spec
 
       - name: Create Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Package
+          name: windows
+          path: ./dist/
+  linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: Wam25/SpaceWarp
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
+        
+      - name: Build App
+        run: pyinstaller SpaceWarp.spec
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux
           path: ./dist/
