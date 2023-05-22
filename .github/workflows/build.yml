@@ -34,6 +34,31 @@ jobs:
         with:
           name: windows
           path: ./dist/
+  mac:
+    runs-on: macos-10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: Wam25/SpaceWarp
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
+        
+      - name: Build App
+        run: pyinstaller SpaceWarp.spec
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac
+          path: ./dist/
   linux:
     runs-on: ubuntu-latest
 
