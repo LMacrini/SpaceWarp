@@ -40,14 +40,12 @@ class App:
             self.offset_x += 128
             self.current_screen += 1
             self.player.x -= 128
-            # self.player.y -= 2
             self.rooms[self.current_screen].spawn_x = self.player.x + 4
             self.rooms[self.current_screen].spawn_y = self.player.y
         elif self.player.x == -5 and self.current_screen != 0:
             self.offset_x -= 128
             self.current_screen -= 1
             self.player.x += 128
-            # self.player.y -= 2
             self.rooms[self.current_screen].spawn_x = self.player.x - 4
             self.rooms[self.current_screen].spawn_y = self.player.y
 
