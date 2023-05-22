@@ -1,9 +1,6 @@
 name: Build SpaceWarp
 
 on:
-  push:
-    branches:
-      - build
   workflow_dispatch:
 
 permissions: write-all
