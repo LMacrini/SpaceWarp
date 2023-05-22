@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Package
-          path: ./dist/main/SpaceWarp.7z
+          path: ./SpaceWarp.7z
