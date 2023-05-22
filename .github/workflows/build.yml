@@ -26,16 +26,13 @@ jobs:
       - name: Install Packages
         run: sudo apt-get install git curl libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 p7zip-full p7zip-rar
 
-      - name: Install Pyxel
-        run: pip install pyxel
-
-      - name: Install Pyinstaller
-        run: pip install pyinstaller 
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
 
       - name: Build EXE
-        run: pyinstaller main.py --add-data "mask.json;./" --add-data "assets;assets" -w --clean -n SpaceWarp -y
+        run: pyinstaller SpaceWarp.spec
 
-      - name: Package Compiled Files
+      - name: Package Files
         run: 7z a -t7z -r SpaceWarp.7z D:/a/SpaceWarp/SpaceWarp/dist/main
 
       - name: Create Artifact
