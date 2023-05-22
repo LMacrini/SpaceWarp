@@ -12,6 +12,7 @@ class Player:
         self.jumping = 0
         self.grav = 2
         self.on_key = -1
+        self.alive = 1
 
     #movement    
     def move(self, room, current_screen):
@@ -30,7 +31,7 @@ class Player:
             and ( (room.collision(self.x - 1, self.y) != 1
             and room.collision(self.x - 1, self.y + 7) != 1 
             and self.x > 0)
-            or (self.x == 0 and current_screen > 0) )
+            or (self.x <= 0 and current_screen > 0) )
         ):
             self.x -= 1
             self.dir = 1
@@ -69,11 +70,11 @@ class Player:
             or room.collision(self.x, self.y + 7) == 5
             or room.collision(self.x + 7, self.y + 7) == 5
         ):
-            self.reset()
+            self.alive = 0
 
-    def reset(self):
-        self.x = 0
-        self.y = 48
+    def reset(self, x, y):
+        self.x = x
+        self.y = y
         self.dir = 0
         self.moving = 0
         self.jumping = 0

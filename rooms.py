@@ -7,6 +7,8 @@ class Room:
         self.doors = [1] * 3
         self.doors_state = [8] * 3
         self.button_state = 0
+        self.spawn_x = 0
+        self.spawn_y = 0
 
     def collision(self, x, y):
         if x // 8 > 15 or y // 8 > 15:

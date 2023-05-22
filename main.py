@@ -30,18 +30,26 @@ class App:
         self.player.move(self.rooms[self.current_screen], self.current_screen)
         self.update_screen_position()
         self.rooms[self.current_screen].update_room(self.player.x, self.player.y)
+        
+        if self.player.alive == 0:
+            self.player.reset(self.rooms[self.current_screen].spawn_x, self.rooms[self.current_screen].spawn_y)
+            self.player.alive = 1
 
     def update_screen_position(self):
-        if self.player.x == 128:
+        if self.player.x == 124:
             self.offset_x += 128
             self.current_screen += 1
             self.player.x -= 128
-            self.player.y -= 2
-        elif self.player.x == -1 and self.current_screen != 0:
+            # self.player.y -= 2
+            self.rooms[self.current_screen].spawn_x = self.player.x + 4
+            self.rooms[self.current_screen].spawn_y = self.player.y
+        elif self.player.x == -5 and self.current_screen != 0:
             self.offset_x -= 128
             self.current_screen -= 1
             self.player.x += 128
-            self.player.y -= 2
+            # self.player.y -= 2
+            self.rooms[self.current_screen].spawn_x = self.player.x - 4
+            self.rooms[self.current_screen].spawn_y = self.player.y
 
 
     def draw(self):
