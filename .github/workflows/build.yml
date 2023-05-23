@@ -28,41 +28,51 @@ jobs:
       - name: Build App
         run: pyinstaller SpaceWarp.spec
 
-      - name: Create Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows
-          path: ./dist/
-  windows-installer:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          repository: Wam25/SpaceWarp
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
-      - name: Install Python Packages
-        run: pip install pyxel pyinstaller
-        
-      - name: Build App
-        run: pyinstaller SpaceWarp.spec
-
       - uses: nadeemjazmawe/inno-setup-action-cli@v6.0.5
         with: 
           filepath: './ISS/script.iss'
 
-      - name: Create Artifact
+      - name: Create Artifact (portable)
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./dist/
+
+      - name: Create Artifact (installer)
         uses: actions/upload-artifact@v3
         with:
           name: windows-installer
           path: ./ISS/Output/
-  mac-pyinstaller:
+  # windows-installer:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: Wam25/SpaceWarp
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: 3.x
+
+  #     - name: Install Python Packages
+  #       run: pip install pyxel pyinstaller
+        
+  #     - name: Build App
+  #       run: pyinstaller SpaceWarp.spec
+
+  #     - uses: nadeemjazmawe/inno-setup-action-cli@v6.0.5
+  #       with: 
+  #         filepath: './ISS/script.iss'
+
+  #     - name: Create Artifact
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: windows-installer
+  #         path: ./ISS/Output/
+  mac:
     runs-on: macos-latest
 
     steps:
@@ -77,33 +87,20 @@ jobs:
           python-version: 3.x
 
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller py2app
         
       - name: Build App
         run: pyinstaller SpaceWarp.spec
 
-      - name: Create Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: mac-pyinstaller
-          path: ./dist/
-  mac-py2app:
-    runs-on: macos-latest
+      - name: Create Folder
+        run: mkdir pyinstallerVersion
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          repository: Wam25/SpaceWarp
+      - name: Move Files
+        run: cp -R dist/* pyinstallerVersion
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
+      - name: Delete Folder
+        run: rm -r dist
 
-      - name: Install Python Packages
-        run: pip install pyxel py2app
-        
       - name: Download Required Files
         run: curl -LOk https://github.com/ForkPrince/SpaceWarp/archive/refs/heads/mac.zip
 
@@ -116,22 +113,82 @@ jobs:
       - name: Delete Folder
         run: rm -r SpaceWarp-mac
 
-      - name: See directory
-        run: ls
-
-      - name: List files in resources
-        run: |
-          cd ressources
-          ls
-        
       - name: Build App
         run: python setup.py py2app
 
-      - name: Create Artifact
+      - name: Create Artifact (pyinstaller)
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac-pyinstaller
+          path: ./pyinstallerVersion/
+
+      - name: Create Artifact (py2app)
         uses: actions/upload-artifact@v3
         with:
           name: mac-py2app
           path: ./dist/
+  # mac-pyinstaller:
+  #   runs-on: macos-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: Wam25/SpaceWarp
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: 3.x
+
+  #     - name: Install Python Packages
+  #       run: pip install pyxel pyinstaller
+
+  #     - name: Build App
+  #       run: pyinstaller SpaceWarp.spec
+
+  #     - name: Create Artifact
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: mac-pyinstaller
+  #         path: ./dist/
+  # mac-py2app:
+  #   runs-on: macos-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: Wam25/SpaceWarp
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: 3.x
+
+  #     - name: Install Python Packages
+  #       run: pip install pyxel py2app
+
+  #     - name: Download Required Files
+  #       run: curl -LOk https://github.com/ForkPrince/SpaceWarp/archive/refs/heads/mac.zip
+
+  #     - name: Extract Required Files
+  #       run: unzip mac.zip
+
+  #     - name: Move Files
+  #       run: cp -R SpaceWarp-mac/* .
+
+  #     - name: Delete Folder
+  #       run: rm -r SpaceWarp-mac
+
+  #     - name: Build App
+  #       run: python setup.py py2app
+
+  #     - name: Create Artifact
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: mac-py2app
+  #         path: ./dist/
   linux:
     runs-on: ubuntu-latest
 
