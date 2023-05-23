@@ -111,7 +111,7 @@ jobs:
         run: unzip mac.zip
 
       - name: Move Files
-        run: cp -R SpaceWarp-mac/ressources/* .
+        run: cp -R SpaceWarp-mac/* .
 
       - name: Delete Folder
         run: rm -r SpaceWarp-mac
