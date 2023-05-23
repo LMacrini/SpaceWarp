@@ -110,8 +110,8 @@ jobs:
       - name: Extract Required Files
         run: unzip mac.zip
         
-      - name: Download Required Files
-        run: dir
+      - name: See directory
+        run: ls
         
       - name: Build App
         run: python setup.py py2app
