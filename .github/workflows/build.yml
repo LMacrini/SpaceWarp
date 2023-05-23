@@ -118,6 +118,11 @@ jobs:
 
       - name: See directory
         run: ls
+
+      - name: List files in resources
+        run: |
+          cd resources
+          ls
         
       - name: Build App
         run: python setup.py py2app
