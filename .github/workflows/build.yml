@@ -109,7 +109,12 @@ jobs:
 
       - name: Extract Required Files
         run: unzip mac.zip
-        
+
+      - name: Move Files
+        run: |
+          mv SpaceWarp-mac/* .
+          rm -r SpaceWarp-mac
+
       - name: See directory
         run: ls
         
