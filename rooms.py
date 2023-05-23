@@ -7,7 +7,7 @@ class Room:
         self.keys = [1] * 3
         self.doors = [1] * 3
         self.doors_state = [8] * 3
-        self.button_state = 0
+        self.button_state = [0] * 3
         self.spawn_x = 0
         self.spawn_y = 0
 
@@ -36,14 +36,15 @@ class Room:
             return 0
     
     def update_room(self, player_x, player_y):
-        if self.button_state != 0:
-            self.button_state -= 1
+        for i in range(3):
+            if self.button_state[i] != 0:
+                self.button_state[i] -= 1
         
         for x, a1 in enumerate(self.objects):
             for y, a2 in enumerate(a1):
                 type = self.types[x][y]
                 if a2 == 2:
-                    if self.keys[type - 1] == 0 or (type == 2 and self.button_state != 0):
+                    if self.keys[type - 1] == 0 or self.button_state[type - 1] != 0:
                         self.doors[type - 1] = 0
                 elif a2 == 3:
                     if ( not (player_x + 7 < x * 8 or x * 8 + 7 < player_x
@@ -54,11 +55,11 @@ class Room:
                         self.doors[type - 1] = 1    
                 elif a2 == 4:
                     if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
-                        self.button_state = 150
-                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state <= 2:
-                        self.button_state = 2
-                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state <= 1:
-                        self.button_state = 1
+                        self.button_state[type - 1] = 150
+                    elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state[type - 1] <= 2:
+                        self.button_state[type - 1] = 2
+                    elif x * 8 - 6 <= player_x <= x * 8 + 6 and y * 8 - 2 < player_y <= y * 8 and self.button_state[type - 1] <= 1:
+                        self.button_state[type - 1] = 1
 
         for i in range(3):
             if self.doors[i] == 0 and self.doors_state[i] > 0:
@@ -76,9 +77,12 @@ class Room:
                 elif a2 == 3 and self.keys[type - 1] == 1:
                     pyxel.blt(x * 8, y * 8, 0, 56, 32 + 8 * (type - 1), 8, 8, 0)
                 elif a2 == 4:
+                    sprite_x = 4 * ((type-1)**2) - 12 * (type - 1) + 24
+                    sprite_y = 8 * ((type-1)**2) - 16 * (type - 1) + 40
+                    pyxel.text(48, 8, str(sprite_x) + str(sprite_y), 7)
                     if self.button_state == 0:
-                        pyxel.blt(x * 8, y * 8, 0, 16, 32, 8, 8, 0)
+                        pyxel.blt(x * 8, y * 8, 0, sprite_x, sprite_y, 8, 8, 0)
                     elif self.button_state == 1:
-                        pyxel.blt(x * 8, y * 8 + 1, 0, 16, 32, 8, 7, 0)
+                        pyxel.blt(x * 8, y * 8 + 1, 0, sprite_x, sprite_y, 8, 7, 0)
                     elif self.button_state == 2:
-                        pyxel.blt(x * 8, y * 8 + 2, 0, 16, 32, 8, 6, 0)
+                        pyxel.blt(x * 8, y * 8 + 2, 0, sprite_x, sprite_y, 8, 6, 0)
