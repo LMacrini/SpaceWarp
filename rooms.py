@@ -46,13 +46,12 @@ class Room:
                 if a2 == 2:
                     if self.keys[type - 1] == 0 or self.button_state[type - 1] != 0:
                         self.doors[type - 1] = 0
+                    else:
+                        self.doors[type - 1] = 1   
                 elif a2 == 3:
                     if ( not (player_x + 7 < x * 8 or x * 8 + 7 < player_x
                         or player_y + 7 < y * 8 or y * 8 + 7 < player_y) ):
-                        self.keys[type - 1] = 0
-                        
-                    else:
-                        self.doors[type - 1] = 1    
+                        self.keys[type - 1] = 0 
                 elif a2 == 4:
                     if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
                         self.button_state[type - 1] = 150
@@ -79,10 +78,9 @@ class Room:
                 elif a2 == 4:
                     sprite_x = 4 * ((type-1)**2) - 12 * (type - 1) + 24
                     sprite_y = 8 * ((type-1)**2) - 16 * (type - 1) + 40
-                    pyxel.text(48, 8, str(sprite_x) + str(sprite_y), 7)
-                    if self.button_state == 0:
+                    if self.button_state[type - 1] == 0:
                         pyxel.blt(x * 8, y * 8, 0, sprite_x, sprite_y, 8, 8, 0)
-                    elif self.button_state == 1:
+                    elif self.button_state[type - 1] == 1:
                         pyxel.blt(x * 8, y * 8 + 1, 0, sprite_x, sprite_y, 8, 7, 0)
-                    elif self.button_state == 2:
+                    elif self.button_state[type - 1] == 2:
                         pyxel.blt(x * 8, y * 8 + 2, 0, sprite_x, sprite_y, 8, 6, 0)
