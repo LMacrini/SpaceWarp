@@ -62,7 +62,7 @@ jobs:
         with:
           name: windows-installer
           path: ./ISS/Output/
-  mac:
+  mac-pyinstaller:
     runs-on: macos-latest
 
     steps:
@@ -85,7 +85,41 @@ jobs:
       - name: Create Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: mac
+          name: mac-pyinstaller
+          path: ./dist/
+  mac-py2app:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: Wam25/SpaceWarp
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel py2app
+        
+      - name: Download Required Files
+        run: curl -LOk https://github.com/ForkPrince/SpaceWarp/archive/refs/heads/mac.zip
+
+      - name: Extract Required Files
+        run: unzip mac.zip
+        
+      - name: Download Required Files
+        run: dir
+        
+      - name: Build App
+        run: python setup.py py2app
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac-py2app
           path: ./dist/
   linux:
     runs-on: ubuntu-latest
