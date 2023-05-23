@@ -177,9 +177,6 @@ jobs:
       - name: Build App
         run: pyxel package ./ ./main.py
 
-      - name: Build App
-        run: dir
-
       - name: Create Artifact
         uses: actions/upload-artifact@v3
         with:
