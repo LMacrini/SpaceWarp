@@ -121,7 +121,7 @@ jobs:
 
       - name: List files in resources
         run: |
-          cd resources
+          cd ressources
           ls
         
       - name: Build App
