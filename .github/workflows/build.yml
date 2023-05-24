@@ -171,7 +171,7 @@ jobs:
       - name: Move Web Files
         run: |
           mkdir ./website
-          mv ./SpaceWarp.html ./website
+          mv ./SpaceWarp.html ./website/index.html
           mv ./ressources ./website
 
       - name: Upload artifact
