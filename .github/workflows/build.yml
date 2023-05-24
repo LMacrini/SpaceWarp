@@ -114,37 +114,24 @@ jobs:
 
       - name: Install Python Packages
         run: pip install pyxel pyinstaller
-        
+
       - name: Build App
         run: pyinstaller SpaceWarp.spec
 
-      - name: Create Artifact
+      - name: Build Pyxel App
+        run: pyxel package ./ ./main.py
+
+      - name: Build Web App
+        run: pyxel app2html ./SpaceWarp-main.pyxapp
+
+      - name: Create Artifact (web)
+        uses: actions/upload-artifact@v3
+        with:
+          name: web
+          path: ./SpaceWarp-main.html
+
+      - name: Create Artifact (linux)
         uses: actions/upload-artifact@v3
         with:
           name: linux
           path: ./dist/
-  # pyxel:
-  #   runs-on: windows-latest
-
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #       with:
-  #         repository: Wam25/SpaceWarp
-
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: 3.x
-
-  #     - name: Install Python Packages
-  #       run: pip install pyxel pyinstaller
-
-  #     - name: Build App
-  #       run: pyxel package ./ ./main.py
-
-  #     - name: Create Artifact
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: pyxel
-  #         path: ./SpaceWarp.pyxapp
