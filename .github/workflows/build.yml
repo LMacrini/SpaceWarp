@@ -125,13 +125,13 @@ jobs:
         run: pyxel package ./ ./main.py
 
       - name: Build Web App
-        run: pyxel app2html ./SpaceWarp-main.pyxapp
+        run: pyxel app2html ./SpaceWarp.pyxapp
 
       - name: Create Artifact (web)
         uses: actions/upload-artifact@v3
         with:
           name: web
-          path: ./SpaceWarp-main.html
+          path: ./SpaceWarp.html
 
       - name: Create Artifact (linux)
         uses: actions/upload-artifact@v3
