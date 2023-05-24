@@ -131,7 +131,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: web
-          path: ./SpaceWarp.html
+          path: |
+            ./SpaceWarp.html
+            ./ressources
 
       - name: Create Artifact (linux)
         uses: actions/upload-artifact@v3
