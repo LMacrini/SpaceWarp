@@ -169,7 +169,7 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: See directories
-        uses: ls
+        run: ls
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
