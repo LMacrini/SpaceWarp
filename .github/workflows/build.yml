@@ -168,21 +168,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: Compress Web Files
-        uses: a7ul/tar-action@v1.1.0
-        id: compress
-        with:
-          command: c
-          cwd: ./
-          files: |
-            ./SpaceWarp.html
-            ./ressources
-          outPath: web.tar.gz
+      - name: Move Web Files
+        run: |
+          mkdir ./website
+          mv ./SpaceWarp.html ./website
+          mv ./ressources ./website
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./web.tar.gz
+          path: ./website
 
       - name: Deploy to GitHub Pages
         id: deployment
