@@ -7,6 +7,10 @@ on:
 
 permissions: write-all
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   windows:
     runs-on: windows-latest
@@ -112,14 +116,40 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install Linux Packages
-        run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
-
       - name: Install Python Packages
         run: pip install pyxel pyinstaller
 
       - name: Build App
         run: pyinstaller SpaceWarp.spec
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux
+          path: ./dist/
+  web:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          repository: Wam25/SpaceWarp
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Linux Packages
+        run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
 
       - name: Build Pyxel App
         run: pyxel package ./ ./main.py
@@ -135,8 +165,16 @@ jobs:
             ./SpaceWarp.html
             ./ressources
 
-      - name: Create Artifact (linux)
-        uses: actions/upload-artifact@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: linux
-          path: ./dist/
+          path: |
+            ./SpaceWarp.html
+            ./ressources
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
