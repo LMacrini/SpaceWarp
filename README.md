@@ -6,6 +6,8 @@ This fork is specifically designed to streamline the build process for the game 
 
 Navigate to the "Actions" tab on GitHub.
 
+While being signed into your github account.
+
 ![actions](https://api.serversmp.xyz/upload/646b8e26a7fc256b12beb629.png)
 
 Click on the latest action.
