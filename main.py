@@ -11,7 +11,8 @@ class App:
         self.load_mask('ressources/mask.json')
         self.rooms[0].spawn_x, self.rooms[0].spawn_y = 0, 112
         self.enter_room_state = copy.deepcopy(self.rooms[0])
-        
+        self.selection = 0
+
         pyxel.init(128, 128, title='SpaceWarp')
         pyxel.load("ressources/assets.pyxres")
         pyxel.run(self.update, self.draw)
@@ -24,10 +25,15 @@ class App:
                 self.rooms.append(Room(mask[1][i], mask[2][i]))
 
     def update(self):
-        if pyxel.btn(pyxel.KEY_S):
-            self.gamestate = 1
-
         if self.gamestate == 0:
+            if pyxel.btnp(pyxel.KEY_DOWN):
+                self.selection = (self.selection + 1) % 3
+            elif pyxel.btnp(pyxel.KEY_UP):
+                self.selection = (self.selection - 1) % 3
+
+            if pyxel.btn(pyxel.KEY_RETURN) or pyxel.btn(pyxel.KEY_Z):
+                if self.selection == 0:
+                    self.gamestate = 1
             return
 
         self.player.move(self.rooms[self.current_screen], self.current_screen)
@@ -60,7 +66,17 @@ class App:
         if self.gamestate == 0:
             pyxel.cls(0)
             pyxel.bltm(0, 0, 0, 0, 0, 128, 128)
-            pyxel.text(42, 64, '(S)tart', 7)
+            pyxel.text(64, 0, str(self.selection), 7)
+            pyxel.text(42, 56, 'Start', 7)
+            pyxel.text(42, 64, 'Difficulty', 7)
+            pyxel.text(42, 72, 'Help', 7)
+            if self.selection == 0:
+                pyxel.text(42, 56, 'Start', 0)
+            elif self.selection == 1:
+                pyxel.text(42, 64, 'Difficulty', 0)
+            elif self.selection == 2:
+                pyxel.text(42, 72, 'Help', 0)
+                
         else:
             pyxel.cls(0)
             pyxel.bltm(0, 0, 2, self.offset_x, 0, 128, 128)
