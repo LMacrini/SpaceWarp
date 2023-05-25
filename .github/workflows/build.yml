@@ -127,35 +127,6 @@ jobs:
         with:
           name: linux
           path: ./dist/
-  android:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          repository: Wam25/SpaceWarp
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
-      - name: Install Python Packages
-        run: pip install pyxel pyinstaller
-
-      - name: Build App
-        id: buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          workdir: ./
-          buildozer_version: stable
-
-      - name: Create Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: android
-          path: ${{ steps.buildozer.outputs.filename }}
   web:
     environment:
       name: github-pages
