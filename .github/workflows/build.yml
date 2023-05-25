@@ -145,8 +145,8 @@ jobs:
         run: pip install pyxel pyinstaller
 
       - name: Build App
-        run: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
           workdir: ./
           buildozer_version: stable
