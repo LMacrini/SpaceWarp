@@ -145,17 +145,17 @@ jobs:
         run: pip install pyxel pyinstaller
 
       - name: Build App
-        uses: ArtemSBulgakov/buildozer-action@v1
+        run: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
           workdir: ./
           buildozer_version: stable
 
-    - name: Create Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: android
-        path: ${{ steps.buildozer.outputs.filename }}
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: ${{ steps.buildozer.outputs.filename }}
   web:
     environment:
       name: github-pages
