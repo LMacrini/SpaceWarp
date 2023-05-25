@@ -36,7 +36,7 @@ class Player:
             self.moving = 0
 
         if (
-            pyxel.btn(pyxel.KEY_SPACE) 
+            (pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP))
             and (room.collision(self.x, self.y + 8) == 1
                  or room.collision(self.x + 7, self.y + 8) == 1)
         ):
