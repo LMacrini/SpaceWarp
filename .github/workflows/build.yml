@@ -1,0 +1,171 @@
+name: Build SpaceWarp
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+permissions: write-all
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
+        
+      - name: Build App
+        run: pyinstaller SpaceWarp.spec
+
+      - uses: nadeemjazmawe/inno-setup-action-cli@v6.0.5
+        with: 
+          filepath: './ISS/script.iss'
+
+      - name: Create Artifact (portable)
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./dist/
+
+      - name: Create Artifact (installer)
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-installer
+          path: ./ISS/Output/
+  mac:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller py2app
+        
+      - name: Build App
+        run: pyinstaller SpaceWarp.spec
+
+      - name: Create Folder
+        run: mkdir pyinstallerVersion
+
+      - name: Move Files
+        run: cp -R dist/* pyinstallerVersion
+
+      - name: Delete Folder
+        run: rm -r dist
+
+      - name: Download Required Files
+        run: curl -LOk https://github.com/ForkPrince/SpaceWarp/archive/refs/heads/mac.zip
+
+      - name: Extract Required Files
+        run: unzip mac.zip
+
+      - name: Move Files
+        run: cp -R SpaceWarp-mac/* .
+
+      - name: Delete Folder
+        run: rm -r SpaceWarp-mac
+
+      - name: Build App
+        run: python setup.py py2app
+
+      - name: Create Artifact (pyinstaller)
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac-pyinstaller
+          path: ./pyinstallerVersion/
+
+      - name: Create Artifact (py2app)
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac-py2app
+          path: ./dist/
+  linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
+
+      - name: Build App
+        run: pyinstaller SpaceWarp.spec
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux
+          path: ./dist/
+  web:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Linux Packages
+        run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
+
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller
+
+      - name: Build Pyxel App
+        run: pyxel package ./ ./main.py
+
+      - name: Build Web App
+        run: pyxel app2html ./SpaceWarp.pyxapp
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Move Web Files
+        run: |
+          mkdir ./website
+          mv ./SpaceWarp.html ./website/index.html
+          mv ./ressources ./website
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: web
+          path: ./website
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          artifact_name: web
