@@ -1,5 +1,6 @@
 import pyxel
 import json
+import sys
 
 class App:
     def __init__(self, room_nb, difficulty, path):
@@ -40,11 +41,11 @@ class App:
             pyxel.bltm(0, 0, self.difficulty + 1, 128 * ((pyxel.frame_count - self.room_nb * self.frame_delay) // self.frame_delay), 256, 128, 128)
 
 path = ['ressources/mask_easy.json', 'ressources/mask_normal.json', 'ressources/mask_hard.json', 'ressources/mask_lunatic.json']
-combine = int(input("Combine?"))
+combine = int(sys.argv[3])
 full_mask = []
 
 if combine == 0:
-    App(int(input("Number of rooms?")), int(input("Difficulty?")), path)
+    App(int(sys.argv[1]), int(sys.argv[2]), path)
 else:
     for i in path:
         with open(i, 'r') as file:

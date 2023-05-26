@@ -27,7 +27,6 @@ class App:
             self.gamestate = self.menu.update_menu()
             if self.gamestate == 1:
                 self.difficulty = self.menu.difficulty
-                self.moment_difficulty = self.difficulty
                 self.load_mask('ressources/mask.json')
                 self.rooms[0].spawn_x, self.rooms[0].spawn_y = 0, 112
                 self.enter_room_state = copy.deepcopy(self.rooms[0])
@@ -67,6 +66,5 @@ class App:
             pyxel.bltm(0, 0, self.difficulty + 1, self.offset_x, 0, 128, 128)
             self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
-            pyxel.text(64, 0, str(self.moment_difficulty), 7)
 
 App()

@@ -35,7 +35,6 @@ class Menu:
     
     def draw_menu(self):
         pyxel.bltm(0, 0, 0, 0, 0, 128, 128)
-        pyxel.text(64, 0, str(self.selection), 7)
         for i, v in enumerate(self.options[self.menu_state]):
             if i == self.selection:
                 col = 0
