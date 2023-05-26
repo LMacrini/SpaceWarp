@@ -12,7 +12,7 @@ class Player:
         self.on_key = -1
         self.alive = 1
 
-    def move(self, room, current_screen):
+    def move(self, room, current_screen, difficulty):
         if (
             pyxel.btn(pyxel.KEY_RIGHT)
             and room.collision(self.x + 8, self.y) != 1
@@ -60,12 +60,20 @@ class Player:
             self.y -= 2
             self.jumping -= 1
 
-        if (room.collision(self.x, self.y) == 5
-            or room.collision(self.x + 7, self.y) == 5
-            or room.collision(self.x, self.y + 7) == 5
-            or room.collision(self.x + 7, self.y + 7) == 5
-        ):
-            self.alive = 0
+        if difficulty <= 1:
+            if (room.collision(self.x + 1, self.y + 1) == 5
+                or room.collision(self.x + 6, self.y + 1) == 5
+                or room.collision(self.x + 1, self.y + 6) == 5
+                or room.collision(self.x + 6, self.y + 6) == 5
+            ):
+                self.alive = 0
+        else:
+            if (room.collision(self.x, self.y) == 5
+                or room.collision(self.x + 7, self.y) == 5
+                or room.collision(self.x, self.y + 7) == 5
+                or room.collision(self.x + 7, self.y + 7) == 5
+            ):
+                self.alive = 0
 
     def reset(self, x, y):
         self.x = x

@@ -32,7 +32,7 @@ class App:
                 self.enter_room_state = copy.deepcopy(self.rooms[0])
             return
 
-        self.player.move(self.rooms[self.current_screen], self.current_screen)
+        self.player.move(self.rooms[self.current_screen], self.current_screen, self.difficulty)
         self.update_screen_position()
         self.rooms[self.current_screen].update_room(self.player.x, self.player.y)
         
