@@ -1,3 +1,5 @@
+**Auto-builds has been merged with [Wam25/SpaceWarp](https://github.com/Wam25/SpaceWarp)**
+
 # SpaceWarp
 
 This fork is specifically designed to streamline the build process for the game Spacewarp. This repository automates the generation of game builds, making it easier for developers and players alike to access the latest versions of the game.
