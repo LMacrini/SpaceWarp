@@ -1,4 +1,4 @@
-<h3 align="center">Auto-builds has been merged with [Wam25/SpaceWarp](https://github.com/Wam25/SpaceWarp)</h3>
+<h3 align="center">Auto-builds has been merged with <a href="https://github.com/Wam25/SpaceWarp">Wam25/SpaceWarp</a></h3>
 
 # SpaceWarp
 
