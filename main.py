@@ -8,7 +8,6 @@ class App:
         self.gamestate = 0
         self.player = Player(0, 112, 0)
         self.current_screen = 0
-        self.offset_x = 0
         self.menu = Menu()
 
         pyxel.init(128, 128, title='SpaceWarp')
@@ -43,14 +42,12 @@ class App:
 
     def update_screen_position(self):
         if self.player.x == 124:
-            self.offset_x += 128
             self.current_screen += 1
             self.player.x -= 128
             self.rooms[self.current_screen].spawn_x = self.player.x + 4
             self.rooms[self.current_screen].spawn_y = self.player.y
             self.enter_room_state = copy.deepcopy(self.rooms[self.current_screen])
         elif self.player.x == -5 and self.current_screen != 0:
-            self.offset_x -= 128
             self.current_screen -= 1
             self.player.x += 128
             self.rooms[self.current_screen].spawn_x = self.player.x - 4
@@ -63,7 +60,7 @@ class App:
         if self.gamestate == 0:
             self.menu.draw_menu()
         else:
-            pyxel.bltm(0, 0, self.difficulty + 1, self.offset_x, 0, 128, 128)
+            pyxel.bltm(0, 0, self.difficulty + 1, self.current_screen * 128, 0, 128, 128)
             self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
 
