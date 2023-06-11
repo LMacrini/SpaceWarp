@@ -1,0 +1,9 @@
+__pycache__
+build
+dist
+ISS/Output
+ressources/mask_easy.json
+ressources/mask_normal.json
+ressources/mask_hard.json
+ressources/mask_lunatic.json
+mask.bat
