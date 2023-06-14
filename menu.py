@@ -38,7 +38,7 @@ class Menu:
         return 0
 
     def draw_menu(self):
-        if pyxel.btnp(pyxel.KEY_RSHIFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_START):
+        if pyxel.btnp(pyxel.KEY_RSHIFT):
             if (self.debug == 1): 
                 pyxel.title("SpaceWarp")
                 self.debug = 0
