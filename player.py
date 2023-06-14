@@ -12,10 +12,11 @@ class Player:
         self.on_key = -1
         self.alive = 1
         self.win = 0
+        self.deadzone = 2000
 
     def move(self, room, current_screen, difficulty):
         if (
-            pyxel.btn(pyxel.KEY_RIGHT)
+            (pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT) or pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTX) > self.deadzone)
             and room.collision(self.x + 8, self.y) != 1
             and room.collision(self.x + 8, self.y + 7) != 1
         ):
@@ -23,7 +24,7 @@ class Player:
             self.dir = 0
             self.moving = 1
         elif (
-            pyxel.btn(pyxel.KEY_LEFT)
+            (pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT) or pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTX) < -self.deadzone)
             and ( (room.collision(self.x - 1, self.y) != 1
             and room.collision(self.x - 1, self.y + 7) != 1 
             and self.x > 0)
@@ -37,7 +38,7 @@ class Player:
             self.moving = 0
 
         if (
-            (pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP))
+            (pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A))
             and (room.collision(self.x, self.y + 8) == 1
                  or room.collision(self.x + 7, self.y + 8) == 1)
         ):
