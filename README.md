@@ -1,17 +1,21 @@
 # SpaceWarp
 
-Currently, a bad game that barely works.
+Welcome to SpaceWarp, currently a game that barely works.
 
-Play [here](https://wam25.github.io/SpaceWarp/) or download from the latest workflow [here](https://github.com/Wam25/SpaceWarp/actions) (mac doesn't work currently)
+**Play the game [here](https://wam25.github.io/SpaceWarp/)** or download it from the latest workflow [here](https://github.com/Wam25/SpaceWarp/actions) (Note: currently not compatible with Mac).
 
-## How to play
+## How to Play
 
-left/right to move\
-space/up to jump\
-up/down to navigate menu\
-enter to select something in the menu\
-r to restart
+**Controls:**
+- Use the left and right arrow keys to move your character.
+- Press the spacebar or up arrow key to jump.
+- Navigate menus by using the up and down arrow keys.
+- Select an item in the menu by pressing the enter key.
+- Press 'r' to restart the game.
 
-press a button completely to activate it. it opens the door(s) with the same colour for 5 seconds\
-collect a key to permanently open all doors of that colour\
-make it to the spaceship or whatever that is to win
+**Objective:**
+Your mission is to reach the spaceship (or whatever that is) and emerge victorious. But beware, the path is filled with challenges!
+
+**Gameplay Tips:**
+- Press and hold a button to activate it. This action will open the door(s) with the same color for 5 seconds.
+- Collect keys to permanently open all doors of the corresponding color.
