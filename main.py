@@ -76,6 +76,6 @@ class App:
             self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
         elif self.gamestate == 2:
-            pyxel.text(72, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
+            pyxel.text(64, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
 
 App()
