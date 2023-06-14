@@ -1,7 +1,11 @@
-import pyxel, json, copy
+import pyxel, json, copy, math
 from player import Player
 from rooms import Room
 from menu import Menu
+
+def round_half_up(n, decimals=0):
+    multiplier = 10 ** decimals
+    return math.floor(n*multiplier + 0.5) / multiplier
 
 class App:
     def __init__(self):
@@ -72,6 +76,6 @@ class App:
             self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
         elif self.gamestate == 2:
-            pyxel.text(72, 32, "Time: " + str(int((self.end_frame - self.start_frame)/30 * 100)/100) + "s", 7)
+            pyxel.text(72, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
 
 App()
