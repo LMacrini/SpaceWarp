@@ -2,7 +2,7 @@
 
 Currently, a bad game that barely works.
 
-Play [here](https://wam25.github.io/SpaceWarp/) or download from the latest workflow [here](https://github.com/Wam25/SpaceWarp/actions)
+Play [here](https://wam25.github.io/SpaceWarp/) or download from the latest workflow [here](https://github.com/Wam25/SpaceWarp/actions) (mac doesn't work currently)
 
 ## How to play
 
