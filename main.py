@@ -29,8 +29,11 @@ class App:
                 self.load_mask('ressources/mask.json')
                 self.rooms[0].spawn_x, self.rooms[0].spawn_y = 0, 112
                 self.enter_room_state = copy.deepcopy(self.rooms[0])
+                self.start_frame = pyxel.frame_count
+                self.end_frame = 0
             return
-
+        if self.gamestate == 2:
+            return
         self.player.move(self.rooms[self.current_screen], self.current_screen, self.difficulty)
         self.update_screen_position()
         self.rooms[self.current_screen].update_room(self.player.x, self.player.y)
@@ -39,6 +42,10 @@ class App:
             self.player.reset(self.rooms[self.current_screen].spawn_x, self.rooms[self.current_screen].spawn_y)
             self.player.alive = 1
             self.rooms[self.current_screen] = copy.deepcopy(self.enter_room_state)
+        
+        if self.player.win == 1:
+            self.gamestate = 2
+            self.end_frame = pyxel.frame_count
 
     def update_screen_position(self):
         if self.player.x == 124:
@@ -56,12 +63,15 @@ class App:
 
 
     def draw(self):
-        pyxel.cls(0)
         if self.gamestate == 0:
+            pyxel.cls(0)
             self.menu.draw_menu()
-        else:
+        elif self.gamestate == 1:
+            pyxel.cls(0)
             pyxel.bltm(0, 0, self.difficulty + 1, self.current_screen * 128, 0, 128, 128)
             self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
+        elif self.gamestate == 2:
+            pyxel.text(72, 32, "Time: " + str(int((self.end_frame - self.start_frame)/30 * 100)/100) + "s", 7)
 
 App()
