@@ -1,12 +1,9 @@
-import pyxel
-import json
-import copy
+import pyxel, json, copy
 from player import Player
 from rooms import Room
 from menu import Menu
 
 class App:
-
     def __init__(self):
         self.gamestate = 0
         self.player = Player(0, 112, 0)
@@ -14,19 +11,9 @@ class App:
         self.menu = Menu()
 
         pyxel.init(128, 128, title='SpaceWarp')
-        pyxel.icon([
-            "00000000000001000000000000000000",
-            "00000000010101000000000001010000",
-            "00000000000001000010100001010000",
-            "00000000000001000010100000000000",
-            "00000000000000000001010000000000",
-            "00000000000000000001010010100000",
-            "00000000101010000000000010100000",
-            "00000000000010000000000000000000"
-        ], 16)
         pyxel.load("ressources/assets.pyxres")
         pyxel.run(self.update, self.draw)
-
+        
     def load_mask(self, file_name):
         with open(file_name, 'r') as file:
             mask = json.load(file)
@@ -42,16 +29,23 @@ class App:
                 self.load_mask('ressources/mask.json')
                 self.rooms[0].spawn_x, self.rooms[0].spawn_y = 0, 112
                 self.enter_room_state = copy.deepcopy(self.rooms[0])
+                self.start_frame = pyxel.frame_count
+                self.end_frame = 0
             return
-
+        if self.gamestate == 2:
+            return
         self.player.move(self.rooms[self.current_screen], self.current_screen, self.difficulty)
         self.update_screen_position()
         self.rooms[self.current_screen].update_room(self.player.x, self.player.y)
-
+        
         if self.player.alive == 0 or pyxel.btnr(pyxel.KEY_R):
             self.player.reset(self.rooms[self.current_screen].spawn_x, self.rooms[self.current_screen].spawn_y)
             self.player.alive = 1
             self.rooms[self.current_screen] = copy.deepcopy(self.enter_room_state)
+        
+        if self.player.win == 1:
+            self.gamestate = 2
+            self.end_frame = pyxel.frame_count
 
     def update_screen_position(self):
         if self.player.x == 124:
@@ -67,14 +61,17 @@ class App:
             self.rooms[self.current_screen].spawn_y = self.player.y
             self.enter_room_state = copy.deepcopy(self.rooms[self.current_screen])
 
-    def draw(self):
-        # Clear the screen
-        pyxel.cls(0)
 
-        # If the gamestate is 0, draw the menu
+    def draw(self):
         if self.gamestate == 0:
+            pyxel.cls(0)
             self.menu.draw_menu()
-        else:
+        elif self.gamestate == 1:
+            pyxel.cls(0)
+            pyxel.bltm(0, 0, self.difficulty + 1, self.current_screen * 128, 0, 128, 128)
+            self.rooms[self.current_screen].draw_room()
+            self.player.draw_player()
+
             if self.menu.debug == 1 and (pyxel.btnp(pyxel.KEY_LEFTBRACKET) or pyxel.btnp(pyxel.KEY_RIGHTBRACKET)):
                 if pyxel.btnp(pyxel.KEY_LEFTBRACKET): self.current_screen = (self.current_screen - 1) % len(self.rooms)
                 if pyxel.btnp(pyxel.KEY_RIGHTBRACKET): self.current_screen = (self.current_screen + 1) % len(self.rooms)
@@ -90,22 +87,12 @@ class App:
 
                 self.player.alive = 0
 
-            if (self.player.ending == 1):
-                self.player.ending = 0
-                self.gamestate = 0
-                self.player = Player(0, 112, 0)
-                self.current_screen = 0
-                self.menu.draw_menu()
+        elif self.gamestate == 2:
+            pyxel.text(72, 32, "Time: " + str(int((self.end_frame - self.start_frame)/30 * 100)/100) + "s", 7)
 
-                if (self.menu.debug == 1): pyxel.title("SpaceWarp (DEBUG)")
-                else: pyxel.title("SpaceWarp")
+        if (self.menu.debug == 1): pyxel.title("SpaceWarp (DEBUG)")
+        else: pyxel.title("SpaceWarp")
 
-            # Draw the current room and player
-            pyxel.bltm(0, 0, self.difficulty + 1, self.current_screen * 128, 0, 128, 128)
-            self.rooms[self.current_screen].draw_room()
-            self.player.draw_player()
-
-            # Draw debug info
-            if (self.menu.debug == 1 and not self.gamestate == 0): pyxel.title(f"SpaceWarp (DEBUG) | Difficulty: {self.difficulty} | Current Screen: {self.current_screen} | Player Position: ({self.player.x}, {self.player.y}) | Room Spawn: ({self.rooms[self.current_screen].spawn_x}, {self.rooms[self.current_screen].spawn_y})")
+        if (self.menu.debug == 1 and not self.gamestate == 0): pyxel.title(f"SpaceWarp (DEBUG) | Difficulty: {self.difficulty} | Current Screen: {self.current_screen} | Player Position: ({self.player.x}, {self.player.y}) | Room Spawn: ({self.rooms[self.current_screen].spawn_x}, {self.rooms[self.current_screen].spawn_y})")
 
 App()

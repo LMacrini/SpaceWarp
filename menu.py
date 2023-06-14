@@ -1,4 +1,4 @@
-import pyxel
+import pyxel, webbrowser
 
 class Menu:
     def __init__(self):
@@ -20,12 +20,14 @@ class Menu:
         if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.KEY_Z) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A):
             if self.selection == 0 and menu_state == 0:
                 return 1
-            elif self.selection != 0 and menu_state == 0:
-                menu_state = self.selection
+            elif self.selection == 1 and menu_state == 0:
+                menu_state = 1
             elif (self.selection == 4 and menu_state == 1
                 or self.selection == 0 and menu_state == 2
             ):
                 menu_state = 0
+            elif self.selection == 2 and menu_state == 0:
+                webbrowser.open("https://github.com/Wam25/SpaceWarp")
             elif menu_state == 1:
                 self.difficulty = self.selection
 
@@ -36,7 +38,7 @@ class Menu:
         return 0
 
     def draw_menu(self):
-        if pyxel.btnp(pyxel.KEY_RSHIFT):
+        if pyxel.btnp(pyxel.KEY_RSHIFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_START):
             if (self.debug == 1): 
                 pyxel.title("SpaceWarp")
                 self.debug = 0

@@ -11,7 +11,7 @@ class Player:
         self.grav = 2
         self.on_key = -1
         self.alive = 1
-        self.ending = 0
+        self.win = 0
         self.deadzone = 2000
 
     def move(self, room, current_screen, difficulty):
@@ -40,7 +40,7 @@ class Player:
         if (
             (pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A))
             and (room.collision(self.x, self.y + 8) == 1
-                or room.collision(self.x + 7, self.y + 8) == 1)
+                 or room.collision(self.x + 7, self.y + 8) == 1)
         ):
             self.jumping = 12
         
@@ -76,9 +76,13 @@ class Player:
                 or room.collision(self.x + 7, self.y + 7) == 5
             ):
                 self.alive = 0
-
-        if (room.collision(self.x, self.y) == 6):
-            self.ending = 1
+        
+        if (room.collision(self.x, self.y) == 6
+            or room.collision(self.x + 7, self.y) == 6
+            or room.collision(self.x, self.y + 7) == 6
+            or room.collision(self.x + 7, self.y + 7) == 6
+        ):
+            self.win = 1
 
     def reset(self, x, y):
         self.x = x
@@ -86,6 +90,7 @@ class Player:
         self.dir = 0
         self.moving = 0
         self.jumping = 0
+
 
     def draw_player(self):
         if self.jumping > 0:
