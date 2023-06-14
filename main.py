@@ -88,7 +88,7 @@ class App:
                 self.player.alive = 0
 
         elif self.gamestate == 2:
-            pyxel.text(72, 32, "Time: " + str(int((self.end_frame - self.start_frame)/30 * 100)/100) + "s", 7)
+            pyxel.text(64, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
 
         if (self.menu.debug == 1): pyxel.title("SpaceWarp (DEBUG)")
         else: pyxel.title("SpaceWarp")
