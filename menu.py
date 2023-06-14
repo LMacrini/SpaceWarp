@@ -36,6 +36,14 @@ class Menu:
         return 0
 
     def draw_menu(self):
+        if pyxel.btnp(pyxel.KEY_RSHIFT):
+            if (self.debug == 1): 
+                pyxel.title("SpaceWarp")
+                self.debug = 0
+            else: 
+                pyxel.title("SpaceWarp (DEBUG)")
+                self.debug = 1
+
         pyxel.bltm(0, 0, 0, 0, 0, 128, 128)
         for i, v in enumerate(self.options[self.menu_state]):
             if i == self.selection:

@@ -78,4 +78,27 @@ class App:
         elif self.gamestate == 2:
             pyxel.text(64, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
 
+            if self.menu.debug == 1 and (pyxel.btnp(pyxel.KEY_LEFTBRACKET) or pyxel.btnp(pyxel.KEY_RIGHTBRACKET)):
+                if pyxel.btnp(pyxel.KEY_LEFTBRACKET): self.current_screen = (self.current_screen - 1) % len(self.rooms)
+                if pyxel.btnp(pyxel.KEY_RIGHTBRACKET): self.current_screen = (self.current_screen + 1) % len(self.rooms)
+
+                if (self.current_screen == 1 or self.current_screen == 3):
+                    self.rooms[self.current_screen].spawn_x = 0
+                    self.rooms[self.current_screen].spawn_y = 112
+                elif (self.current_screen == 2):
+                    self.rooms[self.current_screen].spawn_x = 0
+                    self.rooms[self.current_screen].spawn_y = 48
+
+                self.enter_room_state = copy.deepcopy(self.rooms[self.current_screen])
+
+                self.player.alive = 0
+
+        elif self.gamestate == 2:
+            pyxel.text(64, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
+
+        if (self.menu.debug == 1): pyxel.title("SpaceWarp (DEBUG)")
+        else: pyxel.title("SpaceWarp")
+
+        if (self.menu.debug == 1 and not self.gamestate == 0): pyxel.title(f"SpaceWarp (DEBUG) | Difficulty: {self.difficulty} | Current Screen: {self.current_screen} | Player Position: ({self.player.x}, {self.player.y}) | Room Spawn: ({self.rooms[self.current_screen].spawn_x}, {self.rooms[self.current_screen].spawn_y})")
+
 App()
