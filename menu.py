@@ -6,6 +6,7 @@ class Menu:
         self.selection = 0
         self.difficulty = 0
         self.deadzone = 2000
+        self.debug = 0
         self.options = [['Start', 'Difficulty', 'Help'],
                         ['Easy', 'Normal', 'Hard', 'Lunatic', 'Back']]
     def update_menu(self):
