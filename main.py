@@ -83,7 +83,8 @@ class App:
             pyxel.cls(0)
             if self.end_anim_frame < 72:
                 pyxel.bltm(0, 0, 0, 128, 0, 128, 64)
-                pyxel.blt(88, 48 - self.end_anim_frame, 0, 0, 64, 16, 24)  
+                pyxel.blt(88, 48 - self.end_anim_frame, 0, 0, 32, 16, 16)
+                pyxel.blt(92, 64 - self.end_anim_frame, 0, 8, 16, 8, 8)
                 pyxel.bltm(0, 64, 0, 128, 64, 128, 64)
                 self.end_anim_frame += 1        
             else:
