@@ -50,6 +50,8 @@ class App:
         if self.player.win == 1:
             self.gamestate = 2
             self.end_frame = pyxel.frame_count
+            self.total_time = str(round_half_up((self.end_frame - self.start_frame)/30, 2))
+            self.end_anim_frame = 0
 
     def update_screen_position(self):
         if self.player.x == 124:
@@ -76,6 +78,15 @@ class App:
             self.rooms[self.current_screen].draw_room()
             self.player.draw_player()
         elif self.gamestate == 2:
-            pyxel.text(64, 32, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
+            pyxel.cls(0)
+            if self.end_anim_frame < 72:
+                pyxel.bltm(0, 0, 0, 128, 0, 128, 64)
+                pyxel.blt(88, 48 - self.end_anim_frame, 0, 0, 64, 16, 24)  
+                pyxel.bltm(0, 64, 0, 128, 64, 128, 64)
+                self.end_anim_frame += 1        
+            else:
+                pyxel.bltm(0, 0, 0, 0, 0, 128, 128)
+                pyxel.text(48, 56, "You win!", 7)
+                pyxel.text(40, 64, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
 
 App()
