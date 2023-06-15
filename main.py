@@ -10,8 +10,6 @@ def round_half_up(n, decimals=0):
 class App:
     def __init__(self):
         self.gamestate = 0
-        self.player = Player(0, 112, 0)
-        self.current_screen = 0
         self.menu = Menu()
 
         pyxel.init(128, 128, title='SpaceWarp')
@@ -35,8 +33,12 @@ class App:
                 self.enter_room_state = copy.deepcopy(self.rooms[0])
                 self.start_frame = pyxel.frame_count
                 self.end_frame = 0
+                self.player = Player(0, 112, 0)
+                self.current_screen = 0
             return
         if self.gamestate == 2:
+            if pyxel.btnp(pyxel.KEY_RETURN):
+                self.gamestate = 0
             return
         self.player.move(self.rooms[self.current_screen], self.current_screen, self.difficulty)
         self.update_screen_position()
