@@ -114,7 +114,9 @@ class App:
                 self.end_anim_frame += 1        
             else:
                 pyxel.bltm(0, 0, 0, 0, 0, 128, 128)
-                pyxel.text(48, 56, "You win!", 7)
-                pyxel.text(40, 64, "Time: " + self.total_time + "s", 7)
+                pyxel.text(48, 48, "You win!", 7)
+                pyxel.text(40, 56, "Time: " + self.total_time + "s", 7)
+                pyxel.text(42, 72, "Difficulty:", 7)
+                pyxel.text(48, 80, str(self.menu.options[1][self.difficulty]), 0)
 
 App()
