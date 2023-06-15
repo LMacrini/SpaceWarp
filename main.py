@@ -37,7 +37,7 @@ class App:
                 self.current_screen = 0
             return
         if self.gamestate == 2:
-            if pyxel.btnp(pyxel.KEY_RETURN):
+            if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.KEY_Z) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A):
                 self.gamestate = 0
             return
         self.player.move(self.rooms[self.current_screen], self.current_screen, self.difficulty)
