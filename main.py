@@ -87,6 +87,6 @@ class App:
             else:
                 pyxel.bltm(0, 0, 0, 0, 0, 128, 128)
                 pyxel.text(48, 56, "You win!", 7)
-                pyxel.text(40, 64, "Time: " + str(round_half_up((self.end_frame - self.start_frame)/30, 2)) + "s", 7)
+                pyxel.text(40, 64, "Time: " + self.total_time + "s", 7)
 
 App()
