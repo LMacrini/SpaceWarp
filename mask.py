@@ -11,34 +11,28 @@ class App:
         self.rooms = []
         self.difficulty = difficulty
         self.paths = path
-        pyxel.init(128, 128, title='SpaceWarp')
+        pyxel.init(128 * room_nb, 256, title='SpaceWarp')
         pyxel.load("ressources/assets.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        if 0 < pyxel.frame_count // self.frame_delay <= self.room_nb and pyxel.frame_count % self.frame_delay == 0:
-            objects = [[pyxel.pget(x * 8, y * 8) for y in range(16)] for x in range(16)]
-            self.objects.append(objects)
-
-        elif self.room_nb < pyxel.frame_count // self.frame_delay <= self.room_nb * 2 and pyxel.frame_count % self.frame_delay == 0:
-            types = [[pyxel.pget(x * 8, y * 8) for y in range(16)] for x in range(16)]
+        if pyxel.frame_count < 1:
+            return
+        for i in range(self.room_nb):
+            object = [[pyxel.pget(x * 8 + 128 * i, y * 8) for y in range(16)] for x in range(16)]
+            self.objects.append(object)
+            types = [[pyxel.pget(x * 8 + 128 * i, y * 8 + 128) for y in range(16)] for x in range(16)]
             self.types.append(types)
         
-        if pyxel.frame_count // self.frame_delay == self.room_nb * 2 and pyxel.frame_count % self.frame_delay == 0:
-            self.rooms = [self.room_nb, self.objects, self.types]
-            with open(self.paths[self.difficulty], 'w') as file:
-                json.dump(self.rooms, file)
+        self.rooms = [self.room_nb, self.objects, self.types]
+        with open(self.paths[self.difficulty], 'w') as file:
+            json.dump(self.rooms, file)
 
-
-        elif pyxel.frame_count // self.frame_delay == self.room_nb * 2 + 1:
-            pyxel.quit()
+        pyxel.quit()
 
     def draw(self):
         pyxel.cls(0)
-        if 0 <= pyxel.frame_count // self.frame_delay < self.room_nb:
-            pyxel.bltm(0, 0, self.difficulty + 1, 128 * (pyxel.frame_count // self.frame_delay), 128, 128, 128)
-        elif self.room_nb <= pyxel.frame_count // self.frame_delay < self.room_nb * 2:
-            pyxel.bltm(0, 0, self.difficulty + 1, 128 * ((pyxel.frame_count - self.room_nb * self.frame_delay) // self.frame_delay), 256, 128, 128)
+        pyxel.bltm(0, 0, self.difficulty + 1, 0, 128, 128 * self.room_nb, 256)
 
 path = ['ressources/mask_easy.json', 'ressources/mask_normal.json', 'ressources/mask_hard.json', 'ressources/mask_lunatic.json']
 combine = int(sys.argv[3])
