@@ -10,9 +10,9 @@ class Menu:
         self.options = [['Start', 'Difficulty', 'Help'],
                         ['Easy', 'Normal', 'Hard', 'Lunatic', 'Back']]
     def update_menu(self):
-        if pyxel.btnp(pyxel.KEY_DOWN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN) or pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) < -self.deadzone:
+        if pyxel.btnp(pyxel.KEY_DOWN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN) or pyxel.btnp(pyxel.GAMEPAD1_AXIS_LEFTY) < -self.deadzone:
             self.selection = (self.selection + 1) % len(self.options[self.menu_state])
-        elif pyxel.btnp(pyxel.KEY_UP) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_UP) or pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) > self.deadzone:
+        elif pyxel.btnp(pyxel.KEY_UP) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_UP) or pyxel.btnp(pyxel.GAMEPAD1_AXIS_LEFTY) > self.deadzone:
             self.selection = (self.selection - 1) % len(self.options[self.menu_state])
 
         menu_state = self.menu_state
