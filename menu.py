@@ -7,16 +7,18 @@ class Menu:
         self.difficulty = 0
         self.deadzone = 2000
         self.debug = 0
+        self.controller_previous_state = 0
         self.options = [['Start', 'Difficulty', 'Help'],
                         ['Easy', 'Normal', 'Hard', 'Lunatic', 'Back']]
     def update_menu(self):
-        if pyxel.btnp(pyxel.KEY_DOWN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN) or pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) < -self.deadzone:
+        if pyxel.btnp(pyxel.KEY_DOWN) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN) or (pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) < -self.deadzone and pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) > self.controller_previous_state):
             self.selection = (self.selection + 1) % len(self.options[self.menu_state])
-        elif pyxel.btnp(pyxel.KEY_UP) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_UP) or pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) > self.deadzone:
+        elif pyxel.btnp(pyxel.KEY_UP) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_UP) or (pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) > self.deadzone and pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY) < self.controller_previous_state):
             self.selection = (self.selection - 1) % len(self.options[self.menu_state])
+        self.controller_previous_state = pyxel.btnv(pyxel.GAMEPAD1_AXIS_LEFTY)
 
         menu_state = self.menu_state
-        if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.KEY_Z) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+        if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.KEY_Z) or pyxel.btnr(pyxel.GAMEPAD1_BUTTON_A):
             if self.selection == 0 and menu_state == 0:
                 return 1
             elif self.selection == 1 and menu_state == 0:
