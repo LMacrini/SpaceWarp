@@ -44,7 +44,7 @@ class App:
         self.update_screen_position()
         self.rooms[self.current_screen].update_room(self.player.x, self.player.y)
         
-        if self.player.alive == 0 or pyxel.btnr(pyxel.KEY_R):
+        if self.player.alive == 0 or pyxel.btnp(pyxel.KEY_R) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_Y):
             self.player.reset(self.rooms[self.current_screen].spawn_x, self.rooms[self.current_screen].spawn_y)
             self.player.alive = 1
             self.rooms[self.current_screen] = copy.deepcopy(self.enter_room_state)
