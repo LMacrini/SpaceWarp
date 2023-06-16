@@ -15,7 +15,7 @@ class Menu:
             self.selection = (self.selection - 1) % len(self.options[self.menu_state])
 
         menu_state = self.menu_state
-        if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.KEY_Z) or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+        if pyxel.btnp(pyxel.KEY_RETURN) or pyxel.btnp(pyxel.KEY_Z) or pyxel.btnr(pyxel.GAMEPAD1_BUTTON_A):
             if self.selection == 0 and menu_state == 0:
                 return 1
             elif self.selection == 1 and menu_state == 0:
