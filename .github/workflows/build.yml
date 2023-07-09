@@ -25,7 +25,7 @@ jobs:
           python-version: 3.x
 
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller simpleaudio
         
       - name: Build App
         run: pyinstaller SpaceWarp.spec
@@ -58,7 +58,7 @@ jobs:
 #           python-version: 3.x
 
 #       - name: Install Python Packages
-#         run: pip install pyxel pyinstaller py2app
+#         run: pip install pyxel pyinstaller py2app simpleaudio
         
 #       - name: Build App
 #         run: pyinstaller SpaceWarp.spec
@@ -111,7 +111,7 @@ jobs:
           python-version: 3.x
 
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller simpleaudio
 
       - name: Build App
         run: pyinstaller SpaceWarp.spec
@@ -141,7 +141,7 @@ jobs:
         run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
 
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller simpleaudio
 
       - name: Build Pyxel App
         run: pyxel package ./ ./main.py
