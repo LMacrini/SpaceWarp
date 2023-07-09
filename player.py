@@ -1,5 +1,6 @@
 import pyxel
-import rooms
+import simpleaudio as sa
+# import rooms
 
 class Player:
     def __init__(self, x, y, d):
@@ -43,6 +44,7 @@ class Player:
                  or room.collision(self.x + 7, self.y + 8) == 1)
         ):
             self.jumping = 12
+            sa.WaveObject.from_wave_file("ressources/jump.wav").play()
         
         for i in range(self.grav):
             if (
