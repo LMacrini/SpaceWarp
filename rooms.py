@@ -20,7 +20,7 @@ class Room:
         object_below = self.objects[x // 8][y // 8 - 1]
         type_below = self.types[x // 8][y // 8 - 1]
         if (
-          object_on  == 1
+          object_on == 1
         or (object_on == 2 and (
             self.doors[type_on - 1] == 1
         ))
@@ -64,7 +64,7 @@ class Room:
             if self.doors[i] == 0 and self.doors_state[i] > 0:
                 self.doors_state[i] -= 1
             elif self.doors[i] == 1 and self.doors_state[i] < 8:
-                    self.doors_state[i] += 1
+                self.doors_state[i] += 1
 
     def draw_room(self):
         for x, a1 in enumerate(self.objects):
