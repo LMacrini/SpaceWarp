@@ -1,7 +1,4 @@
 import pyxel
-from pygame import mixer
-
-mixer.init()
 
 class Player:
     def __init__(self, x, y, d):
@@ -15,7 +12,6 @@ class Player:
         self.alive = 1
         self.win = 0
         self.deadzone = 2000
-        self.jump_sound = mixer.Sound("ressources/jump.wav")
 
     def move(self, room, current_screen, difficulty):
         if (
@@ -46,7 +42,6 @@ class Player:
                  or room.collision(self.x + 7, self.y + 8) == 1)
         ):
             self.jumping = 12
-            self.jump_sound.play()
         
         for i in range(self.grav):
             if (
