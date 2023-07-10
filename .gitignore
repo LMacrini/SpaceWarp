@@ -6,5 +6,10 @@ ressources/mask_easy.json
 ressources/mask_normal.json
 ressources/mask_hard.json
 ressources/mask_lunatic.json
+ressources/bgm.mp3
+ressources/bgm.wav
+ressources/explosion.wav
+ressources/item.wav
+ressources/jump.wav
 mask.bat
 display.py
