@@ -1,8 +1,10 @@
 import pyxel, json, copy, math
-import simpleaudio as sa
 from player import Player
 from rooms import Room
 from menu import Menu
+from pygame import mixer
+
+mixer.music.load("ressources/bgm.mp3")
 
 def round_half_up(n, decimals=0):
     multiplier = 10 ** decimals
@@ -12,8 +14,7 @@ class App:
     def __init__(self):
         self.gamestate = 0
         self.menu = Menu()
-        self.bgm_wav = sa.WaveObject.from_wave_file("ressources/bgm.wav")
-        self.bgm = self.bgm_wav.play()
+        mixer.music.play()
 
         pyxel.init(128, 128, title='SpaceWarp')
         pyxel.load("ressources/assets.pyxres")
@@ -74,8 +75,8 @@ class App:
 
 
     def draw(self):
-        if not self.bgm.is_playing():
-            self.bgm = self.bgm_wav.play()
+        if not mixer.music.get_busy():
+            mixer.music.play()
         if self.gamestate == 0:
             pyxel.cls(0)
             self.menu.draw_menu()
