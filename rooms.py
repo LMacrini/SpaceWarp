@@ -40,19 +40,19 @@ class Room:
             if self.button_state[i] != 0:
                 self.button_state[i] -= 1
         
-        for x, a1 in enumerate(self.objects):
-            for y, a2 in enumerate(a1):
+        for x, line in enumerate(self.objects):
+            for y, tile in enumerate(line):
                 type = self.types[x][y] - 1
-                if a2 == 2:
+                if tile == 2:
                     if self.keys[type] == 0 or self.button_state[type] != 0:
                         self.doors[type] = 0
                     else:
                         self.doors[type] = 1   
-                elif a2 == 3:
+                elif tile == 3:
                     if ( not (player_x + 7 < x * 8 or x * 8 + 7 < player_x
                         or player_y + 7 < y * 8 or y * 8 + 7 < player_y) ):
                         self.keys[type] = 0 
-                elif a2 == 4:
+                elif tile == 4:
                     if x * 8 - 4 <= player_x <= x * 8 + 4 and y * 8 == player_y:
                         self.button_state[type] = 150
                     elif x * 8 - 5 <= player_x <= x * 8 + 5 and y * 8 - 1 <= player_y <= y * 8 and self.button_state[type] <= 2:
@@ -67,15 +67,15 @@ class Room:
                 self.doors_state[i] += 1
 
     def draw_room(self):
-        for x, a1 in enumerate(self.objects):
-            for y, a2 in enumerate(a1):
+        for x, line in enumerate(self.objects):
+            for y, tile in enumerate(line):
                 type = self.types[x][y] - 1
-                if a2 == 2:
+                if tile == 2:
                     pyxel.blt(x * 8, y * 8, 0, 32 + 8 * (type), 40 - self.doors_state[type], 8, self.doors_state[type], 0)
                     pyxel.blt(x * 8, y * 8 + 16 - self.doors_state[type], 0, 32 + 8 * (type), 40, 8, self.doors_state[type], 0)
-                elif a2 == 3 and self.keys[type] == 1:
+                elif tile == 3 and self.keys[type] == 1:
                     pyxel.blt(x * 8, y * 8, 0, 56, 32 + 8 * (type), 8, 8, 0)
-                elif a2 == 4:
+                elif tile == 4:
                     sprite_x = 4 * ((type)**2) - 12 * (type) + 24
                     sprite_y = 8 * ((type)**2) - 16 * (type) + 40
                     if self.button_state[type] == 0:

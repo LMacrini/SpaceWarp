@@ -124,51 +124,53 @@ jobs:
         with:
           name: linux
           path: ./dist/
-  # web:
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
+  web:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: no-audio
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: 3.x
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
 
-  #     - name: Install Linux Packages
-  #       run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 libasound2-dev
+      - name: Install Linux Packages
+        run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 libasound2-dev
 
-  #     - name: Install Python Packages
-  #       run: pip install pyxel pyinstaller pygame
+      - name: Install Python Packages
+        run: pip install pyxel pyinstaller pygame
 
-  #     - name: Build Pyxel App
-  #       run: pyxel package ./ ./main.py
+      - name: Build Pyxel App
+        run: pyxel package ./ ./main.py
 
-  #     - name: Build Web App
-  #       run: pyxel app2html ./SpaceWarp.pyxapp
+      - name: Build Web App
+        run: pyxel app2html ./SpaceWarp.pyxapp
 
-  #     - name: Setup Pages
-  #       uses: actions/configure-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
 
-  #     - name: Move Web Files
-  #       run: |
-  #         mkdir ./website
-  #         mv ./SpaceWarp.html ./website/index.html
-  #         mv ./ressources ./website
+      - name: Move Web Files
+        run: |
+          mkdir ./website
+          mv ./SpaceWarp.html ./website/index.html
+          mv ./ressources ./website
 
-  #     - name: Upload artifact
-  #       uses: actions/upload-pages-artifact@v1
-  #       with:
-  #         name: web
-  #         path: ./website
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: web
+          path: ./website
 
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v2
-  #       with:
-  #         artifact_name: web
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          artifact_name: web
