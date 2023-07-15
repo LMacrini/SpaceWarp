@@ -2,6 +2,9 @@ import pyxel, json, copy, math
 from player import Player
 from rooms import Room
 from menu import Menu
+from pygame import mixer
+
+mixer.music.load("ressources/bgm.mp3")
 
 def round_half_up(n, decimals=0):
     multiplier = 10 ** decimals
@@ -11,6 +14,7 @@ class App:
     def __init__(self):
         self.gamestate = 0
         self.menu = Menu()
+        mixer.music.play()
 
         pyxel.init(128, 128, title='SpaceWarp')
         pyxel.load("ressources/assets.pyxres")
@@ -75,6 +79,9 @@ class App:
             debug_prefix = " (DEBUG)"
         else:
             debug_prefix = ""
+
+        if not mixer.music.get_busy():
+            mixer.music.play()
 
         if self.gamestate == 0:
             pyxel.cls(0)

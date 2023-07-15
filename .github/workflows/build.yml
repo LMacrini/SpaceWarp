@@ -25,7 +25,7 @@ jobs:
           python-version: 3.x
 
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller pygame
         
       - name: Build App
         run: pyinstaller SpaceWarp.spec
@@ -58,7 +58,7 @@ jobs:
 #           python-version: 3.x
 
 #       - name: Install Python Packages
-#         run: pip install pyxel pyinstaller py2app
+#         run: pip install pyxel pyinstaller py2app pygame
         
 #       - name: Build App
 #         run: pyinstaller SpaceWarp.spec
@@ -110,8 +110,11 @@ jobs:
         with:
           python-version: 3.x
 
+      - name: Install Linux Packages
+        run: sudo apt-get install libasound2-dev
+
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller pygame
 
       - name: Build App
         run: pyinstaller SpaceWarp.spec
@@ -131,6 +134,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: no-audio
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -138,10 +143,10 @@ jobs:
           python-version: 3.x
 
       - name: Install Linux Packages
-        run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0
+        run: sudo apt-get install libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 libasound2-dev
 
       - name: Install Python Packages
-        run: pip install pyxel pyinstaller
+        run: pip install pyxel pyinstaller pygame
 
       - name: Build Pyxel App
         run: pyxel package ./ ./main.py
