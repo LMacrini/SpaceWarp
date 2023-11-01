@@ -2,7 +2,7 @@
 
 Welcome to SpaceWarp, currently a game that barely works.
 
-**Play the game [here](https://wam25.github.io/SpaceWarp/)** or download it from the latest workflow [here](https://github.com/Wam25/SpaceWarp/actions) (Note: currently not compatible with Mac).
+**Play the game [here](https://lmacrini.github.io/SpaceWarp/)** or download it from the latest workflow [here](https://github.com/LMacrini/SpaceWarp/actions) (Note: currently not compatible with Mac).
 
 ## How to Play
 
