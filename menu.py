@@ -32,7 +32,7 @@ class Menu:
             ):
                 menu_state = 0
             elif self.selection == 2 and menu_state == 0:
-                webbrowser.open("https://github.com/Wam25/SpaceWarp")
+                webbrowser.open("https://github.com/LMacrini/SpaceWarp/blob/main/README.md")
             elif menu_state == 1:
                 self.difficulty = self.selection
 
