@@ -8,3 +8,5 @@ ressources/mask_hard.json
 ressources/mask_lunatic.json
 mask.bat
 display.py
+.DS_Store
+*/.DS_Store
